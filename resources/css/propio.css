@@ -1,0 +1,50 @@
+.t-footer{
+    color: #E6AD09;
+}
+.t-footer>p,.t-footer>span{
+    color: #FFFFFF;
+}
+.t-footer>span>i{
+    color: #E6AD09;
+}
+
+.modal {
+    display: none;
+    position: fixed; /* Stay in place */
+    z-index: 99999; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 20px 100px 10px 100px; 
+    padding: 15px;
+    border: 1px solid #888;
+    border-radius: 10px;
+    height: 95%;
+}
+
+/* The Close Button */
+.close {
+color: #aaa;
+float: right;
+font-size: 28px;
+font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+color: black;
+text-decoration: none;
+cursor: pointer;
+}
+#vistaPrevia{
+    width: 100%;
+    height: 90%;
+}
