@@ -37,64 +37,78 @@
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200 text-center">
                 @if ($tesis->count())
-                    @foreach ($tesis as $item) 
+                    @foreach ($tesis as $tesi) 
                         @php
-                            $status = $item->tesis_status;
+                            $status = $tesi->tesis_status;
                         @endphp     
                         <tr>
                             <td>
-                                {{$item->id}}
+                                {{$tesi->id}}
                             </td>
         
                             <td class="px-6 py-4 whitespace-nowrap">
                                 @switch($status)
-                            @case(3)
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                    Aceptado
-                                </span>                                
-                                @break
-                            @case(60)
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-yellow-800">
-                                    Denegado
-                                </span>
-                                @break
-                            @case(6)
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                    Enviado a su jurado <br>
-                                    (Esperar 15 días)
-                                </span>                                
-                                @break
-                            @case(7)
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-indigo-100 text-indigo-800">
-                                    Finalizada
-                                </span>
-                                @break
-                            @case(50)
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-yellow-800">
-                                    Denegado
-                                </span>
-                                @break
-                            
-                            @case(81)
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
-                                    
-                                </span>
-                                @break
-                            @default
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-red-800">
-                                    Revision
-                                </span>
-                                @break
-                        @endswitch  
+                                    @case(3)
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                            Aceptado
+                                        </span>                                
+                                        @break
+                                    @case(4)
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-red-800">
+                                            Revision
+                                        </span>
+                                        @break                           
+                                    @case(6)
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-indigo-100 text-indigo-800">
+                                            Finalizada
+                                        </span>
+                                        @break
+                                    @case(8)
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-yellow-800">
+                                            Denegado
+                                        </span>
+                                        @break
+                                    @case(9)
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-yellow-800">
+                                            Denegado
+                                        </span>
+                                        @break
+                                    @case(10)
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-yellow-800">
+                                            Denegado
+                                        </span>
+                                        @break
+                                    @case(11)
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-yellow-800">
+                                            Denegado
+                                        </span>
+                                        @break
+                                    @default
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-red-800">
+                                            Revision
+                                        </span>
+                                    @break
+                                @endswitch  
                             </td>
                             <td>
-                                NINGUNA
+                                @if ($status == 8 or $status == 9 or $status == 10 or $status == 11) SI @else NINGUNA @endif
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                @if ($status == 3 or $status == 5 or $status == 4 or  $status ==6)
-                                    <a href="{{route('tesis.progreso',$item->id)}}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-5 cursor-pointer">PROGRESO</a>
+                                @if ($status ==3)                    
+                                    {{--Puede nviar su informe final (por primera vez se crea)--}}  
+                                    <a href="{{route('tramite.tesis.informefinal.create',$tesi)}}" class="bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded mt-5 cursor-pointer">INFORME FINAL</a>
                                 @else
-                                    <a href="{{route('tesis.edit',$item->id)}}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-5 cursor-pointer">ACTUALIZAR</a>
+                                    @if ($status==10 or $status==11)
+                                        {{--Deniega informe final $sattus=10 (Secretaria) y 11(Director)--}}  
+                                        <a href="{{route('tramite.tesis.informefinal.edit',$tesi)}}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-5 cursor-pointer">UPDATE INFORME</a>
+                                    @else
+                                        @if ($status==8 or $status==9)
+                                            {{--Deniega solicitud $sattus=8 (Secretaria) y 9 (Director)--}}            
+                                            <a href="{{route('tramite.tesis.edit',$tesi)}}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-5 cursor-pointer">UPDATE SOLICITUD</a>
+                                        @else  
+                                            <a href="{{route('tramite.tesis.show',$tesi)}}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 cursor-pointer">PROGRESO</a>
+                                        @endif
+                                    @endif
                                 @endif
                             </td>
                         </tr>
@@ -111,14 +125,15 @@
             </table>
         @else
             <div class="text-center my-5">
-                <h1> <i class="fas fa-ban"></i> DEBE TERMINAR SU PRACTICA</h1>
+                <h1> <i class="fas fa-ban"></i> DEBE CULMINAR SU TRAMITE DE PRACTICAS</h1>
             </div>
         @endif
     @else
-    <div class="text-center my-5">
-        <h1> <i class="fas fa-ban"></i> DEBE TERMINAR SU PRACTICA</h1>
-    </div>
+        <div class="text-center my-5">
+            <h1> <i class="fas fa-ban"></i> DEBE INICIAR SU TRAMITE DE PRACTICAS</h1>
+        </div>
     @endif
+
     <hr>
     <!-- GUIA DE PROCEDIMIENTOS -->
     <div class="mx-auto relative pt-20">
@@ -164,10 +179,10 @@
 
             <!-- Content that showing in the box -->
             <div class="flex-auto">
-            <h1 class="font-bold">HACER SU SOLICITUD DE PRACTICA</h1>
+            <h1 class="font-bold">HACER SU SOLICITUD DE TESIS</h1>
             <h3>Formato unico de trámite</h3>
             </div>
         </div>
     </div>
-        
+
 </x-alumno-layout>

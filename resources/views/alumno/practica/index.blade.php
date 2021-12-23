@@ -84,20 +84,27 @@
                                 <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-red-800">
                                     Revision
                                 </span>
-                                @break
+                            @break
                         @endswitch  
                     </td>
                     <td>
                         @if ($status == 8 or $status == 9 or $status == 10 or $status == 11) SI @else NINGUNA @endif
                     </td>                    
-                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">                        
-                        @if ($status == 3 or $status == 5 or $status == 4 or  $status ==6 or $status ==1 or $status==2)
-                            <a href="{{route('tramite.practica.progreso',$practica->id)}}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-5 cursor-pointer">PROGRESO</a>
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        @if ($status ==3)                    
+                            {{--Puede nviar su informe final (por primera vez se crea)--}}  
+                            <a href="{{route('tramite.practica.informefinal.create',$practica)}}" class="bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded mt-5 cursor-pointer">INFORME FINAL</a>
                         @else
                             @if ($status==10 or $status==11)
-                                <a href="{{route('tramite.practica.progresoedit',$practica->id)}}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-5 cursor-pointer">PROGRESO</a>
-                            @else                            
-                                <a href="{{route('tramite.practica.edit',$practica->id)}}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-5 cursor-pointer">ACTUALIZAR</a>
+                                {{--Deniega informe final $sattus=10 (Secretaria) y 11(Director)--}}  
+                                <a href="{{route('tramite.practica.informefinal.edit',$practica)}}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-5 cursor-pointer">UPDATE INFORME</a>
+                            @else
+                                @if ($status==8 or $status==9)
+                                    {{--Deniega solicitud $sattus=8 (Secretaria) y 9 (Director)--}}            
+                                    <a href="{{route('tramite.practica.edit',$practica)}}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-5 cursor-pointer">UPDATE SOLICITUD</a>
+                                @else  
+                                    <a href="{{route('tramite.practica.show',$practica)}}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 cursor-pointer">PROGRESO</a>
+                                @endif
                             @endif
                         @endif
                     </td>

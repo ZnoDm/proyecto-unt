@@ -14,7 +14,6 @@ class RoleSeeder extends Seeder
      */
     public function run()
     {
-        
         $role = Role::create(['name'=>'Alumno']);
         $role->permissions()->attach([1,2,3]);
 

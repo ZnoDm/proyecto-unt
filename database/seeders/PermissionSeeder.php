@@ -15,8 +15,8 @@ class PermissionSeeder extends Seeder
     {
         /*Alumno*/        
         Permission::create(['name'=>'Ver Alumno Dashboard Tramite']); //1
-        Permission::create(['name'=>'Leer Practica']); //2
-        Permission::create(['name'=>'Leer Tesis']);//3
+        Permission::create(['name'=>'Tramite Practica']); //2
+        Permission::create(['name'=>'Tramite Tesis']);//3
         
         /*Administrador ya sea Secretaria Director o Docente */
         Permission::create(['name'=>'Ver Administrador Dashboard']); //4

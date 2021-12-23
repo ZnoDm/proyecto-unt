@@ -17,7 +17,7 @@ class PracticaController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('can:Leer Practica')->only('index','create','store','edit','update');
+        $this->middleware('can:Tramite Practica')->only('index','create','store','edit','show','update');
     }
     //ESTADOS DE LA PRACTICA 1=EN REVISION, 2=APROBADA, 3= RECHAZADA, 4=FINALIZADA, 5=INFORME FINAL.
     public function index()
@@ -111,25 +111,37 @@ class PracticaController extends Controller
         return redirect()->route('tramite.practica.index')->with('info','Su solicitud fue enviada con éxito!');
         
     }
-
-    public function show($id)
+    //VER PROGRESO
+    public function show(Practica $practica)
     {
-        //
+        return view('alumno.practica.progreso',compact('practica')); 
     }
 
-    public function edit($id)
+    public function edit(Practica $practica)
     {
         $docentes = Docente::where('docente_status','3')->orWhere('docente_status','1')->get();
-        $practica = Practica::find($id);
         $observacion = DB::table('practica_obervaciones')->where('practica_id',$practica->id)->latest('id')->first();
         return view('alumno.practica.edit',compact('practica','docentes','observacion'));        
     }
 
     public function update(Request $request, Practica $practica)
     {
-        if($practica->practica_status!=9){
+        //Denego el director 
+        if($practica->practica_status==9){
+            $request->validate([
+                'file_practica' => 'required',
+                
+            ]);
+            $file_practica = $request->file('file_practica')->store('public/practicas/planes');
+            $url_file_practica =Storage::url($file_practica);
+            $practica->update([
+                'practica_file_practica_url' => $url_file_practica,
+                'practica_status' => 2
+            ]);
+        //Denego la secretaria status=8 o primera vez que envia
+        }else{            
             $request->validate([                 
-                'nro' => 'required',
+                'nro' => 'required', 
                 'fecha_inicio' => ['required',
                     function ($attribute, $value, $fail) use ($request) {
                     if ($value < date('Y-m-d')) {
@@ -162,8 +174,6 @@ class PracticaController extends Controller
                 'telefono' => 'required',
                 
             ]);
-            
-    
             $practica->empresa()->update([
                 'empresa_ruc' => $request->ruc,
                 'empresa_razonsocial' => $request->nombre,
@@ -214,19 +224,7 @@ class PracticaController extends Controller
                 'docente_id' => $request->docente_id,
                 'practica_status' => 1
             ]);
-        }else{
-            $request->validate([
-                'file_practica' => 'required',
-                
-            ]);
-            $file_practica = $request->file('file_practica')->store('public/practicas/planes');
-            $url_file_practica =Storage::url($file_practica);
-            $practica->update([
-                'practica_file_practica_url' => $url_file_practica,
-                'practica_status' => 2
-            ]);
         }
-
         return redirect()->route('tramite.practica.index')->with('info','Su solicitud fue actualizada con éxito!');
     }
 
@@ -234,31 +232,19 @@ class PracticaController extends Controller
     {
         //
     }
-
-    public function progreso($id)
+    public function informefinalcreate(Practica $practica)
     {
-        $practica =Practica::find($id);
-        return view('alumno.practica.progreso',compact('practica'));
+        return view('alumno.practica.informefinal-create',compact('practica'));
     }
-
-    public function progresoedit($id)
+    public function informefinalstore(Request $request,Practica $practica)
     {
-        $practica =Practica::find($id);
-        $observacion = DB::table('practica_obervaciones')->where('practica_id',$practica->id)->latest('id')->first();
-        return view('alumno.practica.progreso-edit',compact('practica','observacion'));
-    }
-
-    public function informefinal(Request $request, $id){
-        $practica =Practica::find($id);
-        
         $request->validate([
-            'nro' => 'required',
+            'nro' => 'required|unique:vouchers,voucher_nro',
             'file_voucher' => 'required',
             'file_fut'=>'required',
             'file_informefinal' => 'required',
             'file_certificado' => 'required',
-        ]);
-
+        ]);    
         $file_voucher = $request->file('file_voucher')->store('public/practicas/vouchers');
         $url_file_voucher =Storage::url($file_voucher);
 
@@ -271,7 +257,6 @@ class PracticaController extends Controller
         $file_certificado = $request->file('file_certificado')->store('public/practicas/certificados');
         $url_file_certificado =Storage::url($file_certificado);
 
-        
         $voucher = Voucher::create([
             'voucher_nro' => $request->nro,
             'voucher_url' => $url_file_voucher,
@@ -280,29 +265,90 @@ class PracticaController extends Controller
             'fut_url' => $url_file_fut,
         ]);
         DB::table('fut_practica')->insert([
-            'detalle'=>'SOLICITUD',
+            'detalle'=>'INFORME FINAL',
             'practica_id'=>$practica->id,
             'fut_id'=>$fut->id
         ]);
         DB::table('practica_voucher')->insert([
-            'detalle'=>'SOLICITUD',
+            'detalle'=>'INFORME FINAL',
             'practica_id'=>$practica->id,
             'voucher_id'=>$voucher->id
         ]);
-        if($practica->practica_status !=11){
-            $practica->update([
-                'practica_status' => 4,
-                'practica_file_informe_final_url'=>$url_file_informefinal,
-                'practica_certificado_url'=> $url_file_certificado
-            ]);
-        }else{
+        $practica->update([
+            'practica_status' => 4,
+            'practica_file_informe_final_url'=>$url_file_informefinal,
+            'practica_certificado_url'=> $url_file_certificado
+        ]);
+        return redirect()->route('tramite.practica.index')->with('info','Informe final enviado con exito!');
+    }
+    
+    public function informefinaledit(Practica $practica){
+        $observacion = DB::table('practica_obervaciones')->where('practica_id',$practica->id)->latest('id')->first();
+        return view('alumno.practica.informefinal-edit',compact('practica','observacion'));
+    }
+
+    public function informefinalupdate(Request $request, Practica $practica){
+        //Denego el director 
+        if($practica->practica_status==11){
+            $request->validate([
+            'file_informefinal' => 'required'
+            ]);  
+            $file_informefinal = $request->file('file_informefinal')->store('public/practicas/informe-final');
+            $url_file_informefinal =Storage::url($file_informefinal);
             $practica->update([
                 'practica_status' => 5,
                 'practica_file_informe_final_url'=>$url_file_informefinal,
-                'practica_certificado_url'=> $url_file_certificado
+            ]);
+        //Denego la secretaria status=10 o primera vez que envia
+        }else{            
+            $request->validate([ 
+                'nro' => 'required',
+            ]);
+            if($request->file('file_voucher') || $practica->vouchers->last()->voucher_nro != $request->nro){
+                
+                $request->validate([ 'file_voucher' => 'required']); 
+                $file_voucher = $request->file('file_voucher')->store('public/practicas/vouchers');
+                $url_file_voucher =Storage::url($file_voucher);
+    
+                if($practica->vouchers->last()->voucher_nro == $request->nro){
+                    Storage::delete($practica->vouchers->last()->voucher_url);
+                    $practica->vouchers->last()->update([
+                        'voucher_url' => $url_file_voucher,
+                    ]);
+                }else{
+                    $practica->vouchers->last()->update([                    
+                        'voucher_nro' => $request->nro,
+                        'voucher_url' => $url_file_voucher,
+                    ]);
+                }
+            }
+            if($request->file('file_fut')){
+                Storage::delete($practica->futs->last()->voucher_url);
+                $file_fut = $request->file('file_fut')->store('public/practicas/futs');
+                $url_file_fut =Storage::url($file_fut);
+                $practica->futs->last()->update([                    
+                    'fut_url' => $url_file_fut,
+                ]);
+            }
+            if($request->file('file_informefinal')){
+                $file_informefinal = $request->file('file_informefinal')->store('public/practicas/informe-final');
+                $url_file_informefinal =Storage::url($file_informefinal);
+                $practica->update([
+                    'practica_file_practica_url' => $url_file_informefinal,
+                ]);
+            }
+            if($request->file('file_certificado')){
+                $file_certificado = $request->file('file_certificado')->store('public/practicas/informe-final');
+                $url_file_certificado =Storage::url($file_certificado);
+                $practica->update([
+                    'practica_certificado_url'=> $url_file_certificado,
+                ]);
+            }
+    
+            $practica->update([
+                'practica_status' => 4
             ]);
         }
-        
-        return redirect()->route('tramite.practica.index')->with('info','Informe final enviado con exito!');
+        return redirect()->route('tramite.practica.index')->with('info','Informe final actualizado con exito!');
     }
 }

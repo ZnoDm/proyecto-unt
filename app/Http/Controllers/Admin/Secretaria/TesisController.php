@@ -26,13 +26,13 @@ class TesisController extends Controller
                                 });
         $porfecha = $request->get('porfecha');
         if ($porfecha==2) {
-            $tesisQuery = $tesisQuery->whereDate('created_at','>=',date('Y-m-d H:i:s',strtotime('-7 day', strtotime(date('Y-m-d H:i:s')))));
+            $tesisQuery = $tesisQuery->whereDate('created_at','<=',date('Y-m-d H:i:s',strtotime('-7 day', strtotime(date('Y-m-d H:i:s')))));
         } elseif ($porfecha==3) {
-            $tesisQuery = $tesisQuery->whereDate('created_at','>=',date('Y-m-d H:i:s',strtotime('-30 day', strtotime(date('Y-m-d H:i:s')))));
+            $tesisQuery = $tesisQuery->whereDate('created_at','<=',date('Y-m-d H:i:s',strtotime('-30 day', strtotime(date('Y-m-d H:i:s')))));
         }elseif ($porfecha==4) {
-            $tesisQuery = $tesisQuery->whereDate('created_at','>=',date('Y-m-d H:i:s',strtotime('-90 day', strtotime(date('Y-m-d H:i:s')))));
+            $tesisQuery = $tesisQuery->whereDate('created_at','<=',date('Y-m-d H:i:s',strtotime('-90 day', strtotime(date('Y-m-d H:i:s')))));
         }elseif ($porfecha==5) {
-            $tesisQuery = $tesisQuery->whereDate('created_at','>=',date('Y-m-d H:i:s',strtotime('-365 day', strtotime(date('Y-m-d H:i:s')))));
+            $tesisQuery = $tesisQuery->whereDate('created_at','<=',date('Y-m-d H:i:s',strtotime('-365 day', strtotime(date('Y-m-d H:i:s')))));
         } else {
             /*No haces nada */
         }
