@@ -116,10 +116,11 @@
                                 <x-jet-dropdown-link href="{{ route('profile.show') }}">
                                     {{ __('Profile') }}
                                 </x-jet-dropdown-link>
-
-                                <x-jet-dropdown-link href="{{ route('tramite.practica.index') }}">
-                                    Trámites
-                                </x-jet-dropdown-link>
+                                @can('Ver Alumno Dashboard Tramite')                                    
+                                    <x-jet-dropdown-link href="{{ route('tramite.practica.index') }}">
+                                        Trámites
+                                    </x-jet-dropdown-link>    
+                                @endcan
 
                                 @can('Ver Administrador Dashboard')                        
                                     <x-jet-dropdown-link href="{{ route('admin.home') }}">

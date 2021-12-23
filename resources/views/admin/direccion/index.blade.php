@@ -2,10 +2,6 @@
 
 @section('title', 'Dashboard')
 
-@section('content_header')
-    <h3>SOLICITUDES RECIENTES</h3>
-@stop
-
 @section('content')
     @if (session('info'))
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -85,7 +81,7 @@
         });      
     </script>
     
-    {{--practicas--}}
+    {{--Aprobar practicas--}}
     <script>
         Livewire.on('AprobarPracticaDireccion', (practicaId,estatus) => {
             Swal.fire({
@@ -100,11 +96,6 @@
                 }).then((result) => {
                 if (result.isConfirmed) {
                     Livewire.emitTo('admin.direccion.solicitud','aprobarPractica',practicaId,estatus);
-                    Swal.fire(
-                    'Deleted!',
-                    'Your file has been deleted.',
-                    'success'
-                    )
                 }
                 })
         });
@@ -138,11 +129,6 @@
                 }).then((result) => {
                 if (result.isConfirmed) {
                     Livewire.emitTo('admin.direccion.solicitud','aprobarTesis',tesisId,estatus);
-                    Swal.fire(
-                    'Deleted!',
-                    'Your file has been deleted.',
-                    'success'
-                    )
                 }
                 })
         });
@@ -160,11 +146,6 @@
                 }).then((result) => {
                 if (result.isConfirmed) {
                     Livewire.emitTo('admin.direccion.solicitud','aprobarTesisIF',tesisId,estatus,temporal);
-                    Swal.fire(
-                    'Deleted!',
-                    'Your file has been deleted.',
-                    'success'
-                    )
                 }
                 })
         });
@@ -204,7 +185,6 @@
         }
         function quitar(item)
         {
-            
             temporal.splice(item, 1);
             console.log(temporal);
             $('#fila'+item).remove();

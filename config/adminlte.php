@@ -274,88 +274,44 @@ return [
             'icon' => 'fas fa-envelope',
             'can' => 'Ver Director Solicitudes',
         ],
-        /*
-        [
-            'text' => 'Docentes',
-            'route' => 'admin.docente.index',
-            'active'      => ['admin/docente*'],
-            'icon' => 'fas fa-fw fa-user',
-            'can' => 'Ver Docentes',
-        ],
-        [
-            'text' => 'Alumnos',
-            'route' => 'admin.alumnos',
-            'icon' => 'fas fa-fw fa-user',
-            'can' => 'Ver Alumnos',
-        ],
-        ['header' => 'REGISTROS'],
-        [
-            'text' => 'Empresas',
-            'route' => 'admin.empresa',
-            'icon' => 'fas fa-fw fa-user',
-            'can' => 'Ver Empresas',
-        ],
-        [
-            'text' => 'Vouchers',
-            'route' => 'admin.voucher',
-            'icon' => 'fas fa-cubes',
-            'can' => 'Ver Vouchers',
-        ],
-
-        ['header' => 'OPCIONES DE PRACTICAS'],
-        [
-            'text' => 'Solicitudes',
-            'active'      => ['admin/secretaria/practicas*'],
-            'route' => 'admin.secretaria.practicas',
-            'icon' => 'fas fa-envelope',
-            'can' => 'Ver Solicitudes Practicas',
-        ],
-        [
-            'text' => 'Practicas',
-            'active'      => ['admin/f_practicas'],
-            'route' => 'admin.finalizadaspracicas',
-            'icon' => 'fas fa-folder-open',
-            'can' => 'Ver Practicas',
-        ],
-
-        ['header' => 'OPCIONES DE TESIS'],
-        [
-            'text' => 'Solicitudes',
-            'active'      => ['admin/secretaria/tesis*'],
-            'route' => 'admin.secretaria.tesis',
-            'icon' => 'fas fa-envelope',
-            'can' => 'Ver Solicitudes Tesis',
-        ],
-        [
-            'text' => 'Sustentaciones',
-            'active'      => ['admin/f_*'],
-            'route' => 'admin.tesisfinalizadas',
-            'icon' => 'fas fa-folder-open',
-            'can' => 'Ver Sustentaciones',
-        ],
-        [
-            'text' => 'Tesis',
-            'active'      => ['admin/finalizadas*'],
-            'route' => 'admin.tesis.tesfinales',
-            'icon' => 'fas fa-folder-open',
-            'can' => 'Ver Tesis',
-        ],
         ['header' => 'ESTADISTICAS'],
         [
             'text' => 'Docente/Asesor',
-            'active'      => ['admin/estadistica/grafico1'],
-            'route' => 'grafico1',
+            'route' => 'admin.home',
             'icon' => 'fas fa-chart-bar',
-            'can' => 'Ver Estadisticas',
         ],
         ['header' => 'ROLES'],
         [
             'text' => 'Lista de Roles',
-            'active'      => ['admin/roles*'],
-            'route' => 'admin.roles.index',
+            'route' => 'admin.home',
             'icon' => 'fas fa-fw fa-users-cog',
-            'can' => 'Ver Roles',
-        ], */
+        ],
+        ['header' => 'ALMACENES DE DATOS'],
+        [
+            'text' => 'Docentes',
+            'route' => 'admin.home',
+            'icon' => 'fas fa-chalkboard-teacher',
+        ],
+        [
+            'text' => 'Alumnos',
+            'route' => 'admin.home',
+            'icon' => 'fas fa-fw fa-user',
+        ],
+        [
+            'text' => 'Jurados',
+            'route' => 'admin.home',
+            'icon' => 'fas fa-gavel',
+        ],
+        [
+            'text' => 'Empresas',
+            'route' => 'admin.home',
+            'icon' => 'far fa-building',
+        ],
+        [
+            'text' => 'Vouchers',
+            'route' => 'admin.home',
+            'icon' => 'fas fa-cubes',
+        ]
         
     ],
 

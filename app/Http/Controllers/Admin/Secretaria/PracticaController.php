@@ -28,13 +28,13 @@ class PracticaController extends Controller
                                 });
         $porfecha = $request->get('porfecha');
         if ($porfecha==2) {
-            $practicasQuery = $practicasQuery->whereDate('created_at','>=',date('Y-m-d H:i:s',strtotime('-7 day', strtotime(date('Y-m-d H:i:s')))));
+            $practicasQuery = $practicasQuery->whereDate('created_at','<=',date('Y-m-d H:i:s',strtotime('-7 day', strtotime(date('Y-m-d H:i:s')))));
         } elseif ($porfecha==3) {
-            $practicasQuery = $practicasQuery->whereDate('created_at','>=',date('Y-m-d H:i:s',strtotime('-30 day', strtotime(date('Y-m-d H:i:s')))));
+            $practicasQuery = $practicasQuery->whereDate('created_at','<=',date('Y-m-d H:i:s',strtotime('-30 day', strtotime(date('Y-m-d H:i:s')))));
         }elseif ($porfecha==4) {
-            $practicasQuery = $practicasQuery->whereDate('created_at','>=',date('Y-m-d H:i:s',strtotime('-90 day', strtotime(date('Y-m-d H:i:s')))));
+            $practicasQuery = $practicasQuery->whereDate('created_at','<=',date('Y-m-d H:i:s',strtotime('-90 day', strtotime(date('Y-m-d H:i:s')))));
         }elseif ($porfecha==5) {
-            $practicasQuery = $practicasQuery->whereDate('created_at','>=',date('Y-m-d H:i:s',strtotime('-365 day', strtotime(date('Y-m-d H:i:s')))));
+            $practicasQuery = $practicasQuery->whereDate('created_at','<=',date('Y-m-d H:i:s',strtotime('-365 day', strtotime(date('Y-m-d H:i:s')))));
         } else {
             /*No haces nada */
         }

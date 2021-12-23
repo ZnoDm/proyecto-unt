@@ -1,18 +1,51 @@
 <div>
-    <div class="row">
+    <h3 class="py-3 mb-2">SOLICITUDES RECIENTES {{($tipo_selected==1)?' - PRACTICAS':' - TESIS'}}</h3>
+
+    <h6>FILTROS</h6>
+    <div class="row my-4 gap-4">
+        <div class="col-2">
+            <label for="porfecha" style="font-weight: 500!important" class="d-block"> Fecha </label>
+            <select wire:model="fecha_selected" id="porfecha" name="porfecha" class="form-control form-select w-full" aria-label="Default select example">
+                <option value="1" >Todos</option>
+                <option value="2" >Hace un semana</option>
+                <option value="3" >Hace un mes</option>
+                <option value="3" >Hace 3 meses</option>
+                <option value="3" >Hace un año</option>
+            </select>
+            <small id="emailHelp" class="form-text text-muted">Filtro fecha.</small>
+        </div>
+        <div class="col-2">
+            <label for="pordetalle" style="font-weight: 500!important" class="d-block"> Detalle </label>
+            <select wire:model="detalle_selected" id="pordetalle" name="pordetalle" class="form-control form-select w-full" aria-label="Default select example">
+                <option value="1" >Todos</option>
+                <option value="2" >Solicitud</option>
+                <option value="3" >Informe Final</option>
+            </select>
+            <small id="emailHelp" class="form-text text-muted">Filtro detalle.</small>
+        </div>
+
+        <div class="col-2">
+            <label for="portipo" style="font-weight: 500!important" class="d-block"> Tipo</label>
+            <select wire:model="tipo_selected" id="portipo" name="portipo" class="form-control form-select w-full" aria-label="Default select example">
+                <option value="1" >Practicas</option>
+                <option value="2" >Tesis</option>
+            </select>
+            <small id="emailHelp" class="form-text text-muted">Filtro Tipo.</small>
+        </div>
+        <div class="col-3">
+            <label for="poralumno" style="font-weight: 500!important" class="d-block">Alumno</label>
+            <input wire:model="alumno_search" type="search" placeholder="Busqueda por Alumno" id="poralumno" name="poralumno" class="w-full form-control" aria-label="search" value="">
+            <small id="emailHelp" class="form-text text-muted">Filtro alumno.</small>
+        </div>
+        <div class="col-3">
+            <label for="pordocente" style="font-weight: 500!important" class="d-block">Docente</label>
+            <input wire:model="docente_search" type="search" placeholder="Busqueda por Docente" id="pordocente" name="pordocente" class="w-full form-control" aria-label="search" value="">
+            <small id="emailHelp" class="form-text text-muted">Filtro docente.</small>
+            
+        </div>
         <div class="col-12">
-            <a 
-            wire:model="tipo"
-            wire:click = "$set('tipo','tesis')"
-            class="btn btn-primary">TESIS</a>
-            <a 
-            wire:model="tipo"
-            wire:click = "$set('tipo','practica')"
-            class="btn btn-primary">PRACTICA</a>
-            <form class="d-flex my-4">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
+                {{--ELIMINAR FILTROS--}}
+            <a class="btn btn-danger mt-4" href="{{route('admin.direccion.index')}}" role="button">ELIMINAR FILTROS</a>
         </div>
     </div>
     <div class="row">
@@ -31,7 +64,7 @@
                 </tr>
               </thead>
               <tbody>
-                  @if ($tipo=='practica')
+                  @if ($tipo_selected==1)
                     @forelse($practicas as $solicitud)
                         <tr wire:key="practica-solicitud-{{$solicitud->id}}">
                             <td>{{date('Y-m-d',strtotime($solicitud->created_at))}}</td>

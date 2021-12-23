@@ -15,9 +15,9 @@ Route::get('', function () {
 
 /* Secretaria */
 Route::get('/secretaria/practicas', [PracticaController::class,'index'])->middleware('can:Ver Administrador Dashboard')->name('admin.secretaria.practicas');
-Route::get('/secretaria/practica/{id}/revision', [PracticaController::class,'revision'])->middleware('can:Ver Administrador Dashboard')->name('admin.secretaria.practica.revision');
+Route::get('/secretaria/practica/{id}/review', [PracticaController::class,'revision'])->middleware('can:Ver Administrador Dashboard')->name('admin.secretaria.practica.revision');
 Route::get('/secretaria/tesis', [TesisController::class,'index'])->middleware('can:Ver Administrador Dashboard')->name('admin.secretaria.tesis');
-Route::get('/secretaria/tesis/{id}/revision', [TesisController::class,'revision'])->middleware('can:Ver Administrador Dashboard')->name('admin.secretaria.tesis.revision');
+Route::get('/secretaria/tesis/{id}/review', [TesisController::class,'revision'])->middleware('can:Ver Administrador Dashboard')->name('admin.secretaria.tesis.revision');
 
 /* Direccion */
 Route::get('/direccion', [DireccionSolicitud::class,'index'])->name('admin.direccion.index');
