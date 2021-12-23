@@ -35,7 +35,7 @@ class TesisController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nro' => 'required',
+            'nro' => 'required|unique:vouchers,voucher_nro',
             'file_voucher' => 'required',
             
             'file_fut' => 'required',

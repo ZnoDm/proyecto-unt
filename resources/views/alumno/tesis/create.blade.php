@@ -1,7 +1,7 @@
 <x-alumno-layout>
     
     <h1 class="text-center text-xl font-bold">Nueva Solicitud de Tesis</h1>
-    <form action="{{route('tramite.tesis.store')}}" method="POST" enctype="multipart/form-data">
+    <form name="form" action="{{route('tramite.tesis.store')}}" method="POST" enctype="multipart/form-data">
         @csrf
         <div>
             <h2 class="font-bold mb-1">Voucher </h2>
@@ -37,9 +37,7 @@
 
             </div>
         </div>
-
         <hr class="my-3">
-
         <div>
             <h2 class="font-bold mb-1">Formato Único de Trámite</h2>
             <div class="my-4 grid grid-cols-2 gap-4 px-2">            
@@ -117,52 +115,52 @@
                         <p>Debe ser firmado por el asesor de lo contrario, será rechazado
                     </span>
                 </div>
+
                 <input type="file" name="file_tesis" id="file_tesis" class="w-full" accept=".pdf">
+                <div class="grid justify-items-end my-2">
+                    <!-- Button Modal -->
+                    <a id="btnPlan" class="cursor-pointer bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
+                        <i class="fas fa-eye"></i>
+                        <span class="ml-2">Preview</span>
+                    </a>
+                </div>
                 @error('file_tesis')
                     <span>
                         <strong class="text-red-500">{{$message}}</strong>
                     </span>
                 @enderror
-                </label>
-
-                <div class="grid justify-items-end my-2">
-                    <!-- Button Modal -->
-                    <a id="btnPlan" class="cursor-pointer bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
-                        <i class="fas fa-eye"></i>
-                        <span class="ml-2">Preview</span>
-                    </a>
-                </div>
- 
             </div>
         </div>
       
-        <input type="submit" value="Solicitar" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full mt-2 cursor-pointer">
+        <input type="button" onclick="confirmacion()" value="Solicitar" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full mt-2 cursor-pointer">
     </form>
-    
-    <!-- Modal -->
-    <div id="modalVoucher" class="modal">
+    {{--Fin Nueva Solicitud--}}
 
-        <!-- Modal content -->
-        <div class="modal-content" overflow: scroll;>
-            <span class="close" id="closeVoucher">&times;</span>
-            <img src="" alt="" id="previewVoucher" style="padding: 10px 30%" >
+    <!-- Modal Voucher-->
+    <div id="modalVoucher" class="hidden fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    
+                    <span class="close" id="closeVoucher">&times;</span>
+                    <div class="mt-2"><img id="previewVoucher" src="https://images.pexels.com/photos/10502143/pexels-photo-10502143.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=3&amp;h=750&amp;w=1260" alt="">
+                          </div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Modal -->
+    <!-- Modal FUT-->
     <div id="modalFUT" class="modal">
-
-        <!-- Modal content -->
         <div class="modal-content" overflow: scroll;>
             <span class="close" id="closeFUT">&times;</span>
             <embed id="previewFUT" type="application/pdf" style="height: 92%; width: 100%;">
         </div>
     </div>
 
-    <!-- Modal -->
+    <!-- Modal Plan -->
     <div id="modalPlan" class="modal">
-
-        <!-- Modal content -->
         <div class="modal-content" overflow: scroll;>
             <span class="close" id="closePlan">&times;</span>
             <embed id="previewPlan" type="application/pdf" style="height: 92%; width: 100%;">
@@ -171,13 +169,11 @@
 
     @push('scripts')
         <script>
-            
             let file_voucher = document.querySelector('#file_voucher');      
             let modal = document.querySelector("#modalVoucher");
             let span = document.querySelector("#closeVoucher");             
             let contenidoModal = document.querySelector('#previewVoucher'); 
             let boton = document.querySelector('#btnVoucher')
-
             span.onclick = function() {
                 modal.style.display = "none";
             }
@@ -185,13 +181,13 @@
                 if (event.target == modal) {
                     modal.style.display = "none";
                 }
-            }
-                        
+            }         
             file_voucher.addEventListener('change', () => {
                 let pdffFileURL = URL.createObjectURL(file_voucher.files[0]) + "#toolbar=0";
                 contenidoModal.setAttribute('src', pdffFileURL);
+                boton.classList.remove('bg-gray-300','text-gray-800','hover:bg-gray-400');
+                boton.classList.add('bg-green-300','hover:bg-green-400');
             });
-
             boton.onclick = ()=>{
                         
                 if(file_voucher.files[0]){                
@@ -207,15 +203,12 @@
                 }
             }        
         </script>
-
         <script>
-                
             let file_fut = document.querySelector('#file_fut');      
             let modal_FUT = document.querySelector("#modalFUT");
             let span_FUT = document.querySelector("#closeFUT");             
             let contenidoModal_FUT = document.querySelector('#previewFUT'); 
             let btnFut = document.querySelector('#btnFut')
-
             span_FUT.onclick = function() {
                 modal_FUT.style.display = "none";
             }
@@ -223,13 +216,13 @@
                 if (event.target == modal_FUT) {
                     modal_FUT.style.display = "none";
                 }
-            }
-                        
+            }             
             file_fut.addEventListener('change', () => {
                 let pdffFileURL = URL.createObjectURL(file_fut.files[0]) + "#toolbar=0";
                 contenidoModal_FUT.setAttribute('src', pdffFileURL);
+                btnFut.classList.remove('bg-gray-300','text-gray-800','hover:bg-gray-400');
+                btnFut.classList.add('bg-green-300','hover:bg-green-400');
             });
-
             btnFut.onclick = ()=>{
                         
                 if(file_fut.files[0]){                
@@ -245,15 +238,12 @@
                 }
             }        
         </script>
-
-        <script>
-                    
-            let file_Plan = document.querySelector('#file_practica');      
+        <script>    
+            let file_Plan = document.querySelector('#file_tesis');      
             let modal_Plan = document.querySelector("#modalPlan");
             let span_Plan = document.querySelector("#closePlan");             
             let contenidoModal_Plan = document.querySelector('#previewPlan'); 
             let btnPlan = document.querySelector('#btnPlan')
-
             span_Plan.onclick = function() {
                 modal_Plan.style.display = "none";
             }
@@ -261,13 +251,13 @@
                 if (event.target == modal_Plan) {
                     modal_Plan.style.display = "none";
                 }
-            }
-                        
+            }                        
             file_Plan.addEventListener('change', () => {
                 let pdffFileURL = URL.createObjectURL(file_Plan.files[0]) + "#toolbar=0";
                 contenidoModal_Plan.setAttribute('src', pdffFileURL);
+                btnPlan.classList.remove('bg-gray-300','text-gray-800','hover:bg-gray-400');
+                btnPlan.classList.add('bg-green-300','hover:bg-green-400');
             });
-
             btnPlan.onclick = ()=>{
                         
                 if(file_Plan.files[0]){                
@@ -282,6 +272,24 @@
                     })
                 }
             }        
+        </script>
+        <script>
+            function confirmacion(){
+                Swal.fire({
+                title: 'Esta seguro?',
+                text: "Esta apunto de enviar una solicitud de practica",
+                icon: 'warning',
+                showCancelButton: true,
+                cancelButtonText: 'Cancelar',
+                confirmButtonColor: '#2ECC71',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'De Acuerdo!'
+                }).then((result) => {
+                if (result.isConfirmed) {                  
+                    document.form.submit()
+                }
+                })
+            }
         </script>
     @endpush
     
