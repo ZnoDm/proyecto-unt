@@ -20,7 +20,7 @@ class DocenteSeeder extends Seeder
         Docente::create([
             'docente_nombre' => 'ARELLANO SALAZAR, CÉSAR',
             'docente_email' => $email,
-            'docente_status' => 1,
+            'docente_status' => 1, //Asesor de Practicas
             'docente_telefono'=> rand(999999990,999999999),
             'user_id' => $user->id
         ]);
@@ -64,7 +64,7 @@ class DocenteSeeder extends Seeder
             'docente_nombre' => 'MENDOZA DE LOS SANTOS, ALBERTO CARLOS',
             'docente_email' => $email,
             'docente_telefono'=> rand(999999990,999999999),
-            'docente_status' => 2,
+            'docente_status' => 2,//Asesor de Tesis
             'user_id' => $user->id        
         ]);
         $user->assignRole('Docente');

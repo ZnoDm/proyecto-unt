@@ -8,6 +8,8 @@ use App\Http\Controllers\Admin\Docente\DocenteController as DocenteJurado;
 
 use App\Http\Controllers\Admin\Secretaria\PracticaController;
 use App\Http\Controllers\Admin\Secretaria\TesisController;
+use App\Http\Livewire\Admin\Almacen\AlmacenDocente;
+use App\Models\Docente;
 
 Route::get('', function () {
      return view('admin.index');
@@ -25,9 +27,14 @@ Route::get('/direccion', [DireccionSolicitud::class,'index'])->name('admin.direc
 /* Docente Jurado */
 Route::get('/docente', [DocenteJurado::class,'index'])->name('admin.docente.index');
 
+/* Almacen de datos */
+Route::get('/alumnos', [AdminController::class,'alumnos'])->name('admin.alumnos'); //Alumnos
+Route::get('/docentes', [AdminController::class, 'docentes'])->name('admin.docentes'); //Docentes
+Route::get('/jurados', [AdminController::class, 'jurados'])->name('admin.jurados'); //Jurados
+Route::get('/empresas', [AdminController::class, 'empresas'])->name('admin.empresas'); //Empresas
+Route::get('/vouchers', [AdminController::class, 'vouchers'])->name('admin.vouchers'); //Vouchers
 
 /* 
-Route::get('/alumnos', [AdminController::class,'alumnos'])->name('admin.alumnos');
 Route::resource('/roles', RoleController::class)->names('admin.roles');
 Route::get('/docente/{docente}', [DocenteController::class,'show'])->name('admin.docente.show');
 Route::get('/docente/asignar/{docente}', [DocenteController::class,'asignar'])->name('admin.docente.asignar');

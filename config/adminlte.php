@@ -289,27 +289,27 @@ return [
         ['header' => 'ALMACENES DE DATOS'],
         [
             'text' => 'Docentes',
-            'route' => 'admin.home',
+            'route' => 'admin.docentes',
             'icon' => 'fas fa-chalkboard-teacher',
         ],
         [
             'text' => 'Alumnos',
-            'route' => 'admin.home',
+            'route' => 'admin.alumnos',
             'icon' => 'fas fa-fw fa-user',
         ],
         [
             'text' => 'Jurados',
-            'route' => 'admin.home',
+            'route' => 'admin.jurados',
             'icon' => 'fas fa-gavel',
         ],
         [
             'text' => 'Empresas',
-            'route' => 'admin.home',
+            'route' => 'admin.empresas',
             'icon' => 'far fa-building',
         ],
         [
             'text' => 'Vouchers',
-            'route' => 'admin.home',
+            'route' => 'admin.vouchers',
             'icon' => 'fas fa-cubes',
         ]
         

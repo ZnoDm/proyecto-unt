@@ -7,7 +7,7 @@
 @stop
 
 @section('content')
-    @livewire('admin-alumnos')
+    @livewire('admin.almacen.admin-alumno')
 @stop
 
 @section('css')
