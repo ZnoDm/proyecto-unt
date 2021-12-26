@@ -21,8 +21,8 @@ class Docente extends Model
     public function tesi(){
         return $this->hasMany('App\Models\Tesis');
     }
-    public function tesis(){
-        return $this->belongsToMany('App\Models\Tesis');
+    public function jurado(){
+        return $this->hasMany('App\Models\Jurado');
     }
    
 }

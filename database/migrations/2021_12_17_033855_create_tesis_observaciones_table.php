@@ -17,8 +17,8 @@ class CreateTesisObservacionesTable extends Migration
             $table->id();
             $table->string('to_detalle');
             $table->string('to_status');
-            $table->unsignedBigInteger('practica_id');
-            $table->foreign('practica_id')->references('id')->on('practicas');
+            $table->unsignedBigInteger('tesis_id');
+            $table->foreign('tesis_id')->references('id')->on('tesis');
             $table->unsignedBigInteger('administrativo_id');
             $table->foreign('administrativo_id')->references('id')->on('administrativos');
             $table->timestamps();

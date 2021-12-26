@@ -23,6 +23,9 @@ class Tesis extends Model
     }  
     public function futs(){
         return $this->belongsToMany('App\Models\Fut');
+    }
+    public function jurados(){
+        return $this->belongsToMany('App\Models\Jurado');
     } 
 
     public function docentes(){

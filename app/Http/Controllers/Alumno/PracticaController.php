@@ -20,6 +20,7 @@ class PracticaController extends Controller
         $this->middleware('can:Tramite Practica')->only('index','create','store','edit','show','update');
     }
     //ESTADOS DE LA PRACTICA 1=EN REVISION, 2=APROBADA, 3= RECHAZADA, 4=FINALIZADA, 5=INFORME FINAL.
+    //DOCENTE 1= ASESORES DE PRACTICAS
     public function index()
     {
         $alumno = Alumno::firstWhere(['alumno_email'=>auth()->user()->email]);
@@ -98,12 +99,12 @@ class PracticaController extends Controller
             'practica_status' =>1,
         ]);
         DB::table('fut_practica')->insert([
-            'detalle'=>'SOLICITUD',
+            'detalle'=>'SOLICITUD PRACTICA',
             'practica_id'=>$practica->id,
             'fut_id'=>$fut->id
         ]);
         DB::table('practica_voucher')->insert([
-            'detalle'=>'SOLICITUD',
+            'detalle'=>'SOLICITUD PRACTICA',
             'practica_id'=>$practica->id,
             'voucher_id'=>$voucher->id
         ]);
@@ -265,12 +266,12 @@ class PracticaController extends Controller
             'fut_url' => $url_file_fut,
         ]);
         DB::table('fut_practica')->insert([
-            'detalle'=>'INFORME FINAL',
+            'detalle'=>'INFORME FINAL PRACTICA',
             'practica_id'=>$practica->id,
             'fut_id'=>$fut->id
         ]);
         DB::table('practica_voucher')->insert([
-            'detalle'=>'INFORME FINAL',
+            'detalle'=>'INFORME FINAL PRACTICA',
             'practica_id'=>$practica->id,
             'voucher_id'=>$voucher->id
         ]);

@@ -64,7 +64,7 @@
 @stop
 
 @section('js')
-  {{--Modales--}}
+  {{--Modale FUT--}}
   <script>          
     let modal = document.querySelector("#modalFUT");
     let span = document.querySelector("#closeFUT");             
@@ -83,8 +83,8 @@
             modal.style.display = "block";
     }        
   </script>
-  <script>
-                
+  {{--Modale Plan Practica--}}
+  <script>     
     let modalP = document.querySelector("#modalPractica");
     let spanP = document.querySelector("#closePractica");             
     let botonP = document.querySelector('#btnPractica');

@@ -48,12 +48,6 @@
         <div class="col-8 card">
             <div class="card-body">
                 <h3 class="my-3 font-weight-bold text-center"> PLAN DE PRACTICA </h3>
-                @if ($practica->practica_status==8 or $practica->practica_status==9)
-                    <div class="alert alert-danger d-flex align-items-center" role="alert">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        <p class="pl-3"> Director de escuela:  <br> {{$observacion}}</p>
-                    </div>
-                @endif
                 <!--VOUCHER-->
                 <h6 class="font-weight-bold"> Voucher </h6> 
                 <div class="row">               
@@ -72,7 +66,6 @@
                     </div>
                 </div>
                 <hr class="my-3">            
-                <h6 class="font-weight-bold">Practica</h6>
                 <div class="row">
                     <div class="col-8">                    
                         <span>Formato Unico de Trámite - FUT</span>
@@ -84,7 +77,8 @@
                         </div>
                     </div>
                 </div>
-    
+                <hr class="my-3"> 
+                <h6 class="font-weight-bold">Practica</h6>
                 <div class="row">
                     <div class="col">
                         <span >Asesor: </span>              
@@ -139,7 +133,7 @@
         </div>
     </div>
 
-    <!-- Modal Imagenes-->
+    <!-- Modal Voucher-->
     <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModal1Label" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">

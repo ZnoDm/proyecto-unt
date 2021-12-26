@@ -19,6 +19,7 @@ Route::get('tesis/{tesi}/progreso', [TesisController::class,'progreso'])->middle
 
 Route::get('tesis/{tesi}/informefinal-create', [TesisController::class,'informefinalcreate'])->middleware('can:Tramite Tesis')->name('tramite.tesis.informefinal.create');
 Route::post('tesis/{tesi}/informefinal.store', [TesisController::class,'informefinalstore'])->middleware('can:Tramite Tesis')->name('tramite.tesis.informefinal.store');
-Route::get('tesis/{tesi}/informefinal-edit', [TesisController::class,'informefinaledit'])->middleware('can:Tramite Tesis')->name('tramite.practica.informefinal.edit');
+
+Route::get('tesis/{tesi}/informefinal-edit', [TesisController::class,'informefinaledit'])->middleware('can:Tramite Tesis')->name('tramite.tesis.informefinal.edit');
 Route::put('tesis/{tesi}/informefinal-update', [TesisController::class,'informefinalupdate'])->middleware('can:Tramite Tesis')->name('tramite.tesis.informefinal.update');
 

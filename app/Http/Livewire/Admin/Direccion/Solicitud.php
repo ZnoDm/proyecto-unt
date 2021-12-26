@@ -13,9 +13,10 @@ class Solicitud extends Component
 {
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
+    public $name;
     public $docentes,$prueba,$practicas,$tesis;
-    public $docente_search='',$alumno_search='',$detalle_selected=1,$tipo_selected=1,$fecha_selected=1;
-    protected $listeners = ['aprobarTesis','aprobarTesisIF','aprobarPractica','denegarPractica'];
+    public $docente_search='',$alumno_search='',$detalle_selected=1,$tipo_selected=0,$fecha_selected=1;
+    protected $listeners = ['aprobarTesis','denegarTesis','aprobarPractica','denegarPractica'];
 
     public function mount()
     {
@@ -103,32 +104,6 @@ class Solicitud extends Component
             $this->tesis= Tesis::whereDate('created_at','<=',date('Y-m-d H:i:s'))->get();
         }
     }
-    public function aprobarTesis($tesisId,$estatus){
-        //Solicitud
-        $tesis = Tesis::find($tesisId);
-        $tesis->update(['tesis_status' => 3]);
-        session()->flash('info','Tesis Aprobado correctamente');
-        return redirect()->route('admin.direccion.index');
-    }
-    public function aprobarTesisIF($tesisId,$estatus,$temporal){
-        //Informe final
-        $tesis = Tesis::find($tesisId);
-        $tesis->update(['tesis_status' => 6]);
-        DB::table('jurados')->insert([
-            'tesis_id'=>$tesis->id,
-            'docente_id'=>$temporal[0]
-        ]);
-        DB::table('jurados')->insert([
-            'tesis_id'=>$tesis->id,
-            'docente_id'=>$temporal[1]
-        ]);
-        DB::table('jurados')->insert([
-            'tesis_id'=>$tesis->id,
-            'docente_id'=>$temporal[2]
-        ]);
-        session()->flash('info','Tesis Aprobado correctamente');
-        return redirect()->route('admin.direccion.index');
-    }
     public function aprobarPractica($practicaId,$estatus){
         //Informe final o Solicitud
         $practica = Practica::find($practicaId);
@@ -139,6 +114,7 @@ class Solicitud extends Component
         session()->flash('info','Practica Aprobada correctamente');
         return redirect()->route('admin.direccion.index');
     }
+    
     public function denegarPractica($practicaId,$mensaje,$estatus){
         //Informe final o Solicitud
         $practica = Practica::find($practicaId);
@@ -161,9 +137,68 @@ class Solicitud extends Component
         }
 
         
-        session()->flash('info','Se ha denegado correctamente, se mandaron las observaciones al alumno');
+        session()->flash('info','Se ha denegado la practica correctamente, se mandaron las observaciones al alumno');
         return redirect()->route('admin.direccion.index');
     }
+    
+
+    public function aprobarTesis($tesisId,$estatus,$temporal){
+        //Solicitud
+        if($estatus==2){        
+            $tesis = Tesis::find($tesisId);
+            $tesis->update(['tesis_status' => 3]);
+            session()->flash('info','Tesis Aprobado correctamente');
+        }else{        
+        //Informe final
+        if(empty($temporal[2]))                
+            session()->flash('info','Error debe agregar 3 jurados');
+        else{
+                $tesis = Tesis::find($tesisId);
+                $tesis->update(['tesis_status' => 6]);
+                DB::table('jurados')->insert([
+                    'tesis_id'=>$tesis->id,
+                    'docente_id'=>$temporal[0]
+                ]);
+                DB::table('jurados')->insert([
+                    'tesis_id'=>$tesis->id,
+                    'docente_id'=>$temporal[1]
+                ]);
+                DB::table('jurados')->insert([
+                    'tesis_id'=>$tesis->id,
+                    'docente_id'=>$temporal[2]
+                ]);
+                session()->flash('info','Tesis IF Aprobado correctamente');
+        }
+        }
+        
+        return redirect()->route('admin.direccion.index');
+    }   
+    public function denegarTesis($tesisId,$mensaje,$estatus){
+        //Informe final o Solicitud
+        $tesis = Tesis::find($tesisId);
+        if($estatus ==5){
+            $tesis->update(['tesis_status' => 11]);
+            DB::table('tesis_observaciones')->insert([
+            'to_detalle'=>$mensaje,
+            'to_status'=>'DIRECTOR A ALUMNO',
+            'tesis_id'=>$tesis->id,
+            'administrativo_id'=>2,
+        ]);
+        }
+        else{            
+            $tesis->update(['tesis_status' => 9]);
+            DB::table('tesis_observaciones')->insert([
+            'to_detalle'=>$mensaje,
+            'to_status'=>'DIRECTOR A ALUMNO',
+            'tesis_id'=>$tesis->id,
+            'administrativo_id'=>2,]);
+        }
+
+        
+        session()->flash('info','Se ha denegado la tesis correctamente, se mandaron las observaciones al alumno');
+        return redirect()->route('admin.direccion.index');
+    } 
+
     public function render()
     {
         return view('livewire.admin.direccion.solicitud');

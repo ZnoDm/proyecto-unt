@@ -86,21 +86,21 @@
                 </tr>
             </thead>
             <tbody> 
-                @forelse ($tesis as $item)
+                @forelse ($tesis as $tesi)
                     <tr>
-                        <td>{{date('Y-m-d',strtotime($tem->created_at))}}</td>
-                        <td>{{$tem->alumno->id}}</td>  
-                        <td>{{$tem->alumno->alumno_apellido.' '.$tem->alumno->alumno_nombre}}</td>                         
-                        <td>{{$tem->docente->id}}</td>
-                        <td>{{$tem->docente->docente_apellido.' '.$tem->docente->docente_nombre}}</td> 
+                        <td>{{date('Y-m-d',strtotime($tesi->created_at))}}</td>
+                        <td>{{$tesi->alumno->id}}</td>  
+                        <td>{{$tesi->alumno->alumno_apellido.' '.$tesi->alumno->alumno_nombre}}</td>                         
+                        <td>{{$tesi->docente->id}}</td>
+                        <td>{{$tesi->docente->docente_apellido.' '.$tesi->docente->docente_nombre}}</td> 
                         <td> 
-                            @if ($item->tesis_status ==1)
+                            @if ($tesi->tesis_status ==1)
                                 SOLICITUD DE TESIS
                             @else
                                 INFORME FINAL
                             @endif
                         </td>
-                        <td><a href="{{route('admin.secretaria.tesis.revision',$item->id)}}" class="btn btn-success"><i class="fas fa-eye"></i></a></td>
+                        <td><a href="{{route('admin.secretaria.tesis.revision',$tesi->id)}}" class="btn btn-success"><i class="fas fa-eye"></i></a></td>
                     </tr>
                 @empty
                     <tr>
@@ -112,12 +112,4 @@
     </div>
     
 </div>
-@stop
-
-@section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
-@stop
-
-@section('js')
-    <script> console.log('Hi!'); </script>
 @stop

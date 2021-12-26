@@ -141,8 +141,6 @@
 
     <!-- Modal -->
     <div id="modalFUT" class="modal">
-
-        <!-- Modal content -->
         <div class="modal-content" overflow: scroll;>
             <span class="close" id="closeFUT">&times;</span>
             <embed id="previewFUT" src="{{$practica->futs->last()->fut_url}}" type="application/pdf" style="height: 92%; width: 100%;">

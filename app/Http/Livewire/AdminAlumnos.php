@@ -9,8 +9,10 @@ use Livewire\WithPagination;
 class AdminAlumnos extends Component
 {
     use WithPagination;
+    
     protected $paginationTheme = "bootstrap";
     public $search;
+
     public function render()
     {
         $alumnos = Alumno::where('nombre','LIKE','%'.$this->search.'%')->orWhere('email','LIKE','%'.$this->search.'%')->paginate(8);

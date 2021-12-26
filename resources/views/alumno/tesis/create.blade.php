@@ -60,9 +60,7 @@
                 </div>
             </div>
         </div>
-
         <hr class="my-3">
-
         <div>
             <h2 class="font-bold mb-1">Tesis: </h2>
             <div class="mb-4 grid grid-cols-2 gap-4 px-2">
