@@ -111,7 +111,7 @@
         </div>
     @else
         @if($status ==6)
-            @livewire('alumno.jurado-observaciones',['tesis' => $tesi])            
+            @livewire('alumno.jurados',['tesis' => $tesi])            
         @else
             @if($status ==7)
                 <h2 class="text-xl font-bold mt-4 text-center">PROCESO FINALIZADO</h2>

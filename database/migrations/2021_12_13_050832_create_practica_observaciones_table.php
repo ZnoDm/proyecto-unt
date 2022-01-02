@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePracticaObervacionesTable extends Migration
+class CreatePracticaObservacionesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreatePracticaObervacionesTable extends Migration
      */
     public function up()
     {
-        Schema::create('practica_obervaciones', function (Blueprint $table) {
+        Schema::create('practica_observaciones', function (Blueprint $table) {
             $table->id();
             $table->string('po_detalle');
             $table->string('po_status');
@@ -32,6 +32,6 @@ class CreatePracticaObervacionesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('practica_obervaciones');
+        Schema::dropIfExists('practica_observaciones');
     }
 }

@@ -21,7 +21,7 @@ class PracticaInformeFinal extends Component
     public function denegar($practicaId,$mensaje){
         $practica = Practica::find($practicaId);
         $practica->update(['practica_status' => 10]);
-        DB::table('practica_obervaciones')->insert([
+        DB::table('practica_observaciones')->insert([
             'po_detalle'=>$mensaje,
             'po_status'=>'SECRETARIA A ALUMNO IF',
             'practica_id'=>$practica->id,

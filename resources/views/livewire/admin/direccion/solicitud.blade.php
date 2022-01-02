@@ -254,7 +254,7 @@
                 <h5 class="font-weight-bold text-center">JURADO</h5>
                 <div class="row px-5">
                     <select name="docente_id" id="docente_id" class="form-control w-100" aria-label=".form-select-lg example" onchange="agregar();" >
-                            <option value="">SELECCIONA UN DOCENTE</option>
+                            <option value="" disabled selected>SELECCIONA UN DOCENTE</option>
                             @foreach($docentes as $docente)
                                 <option value="{{$docente->id}}_{{$docente->docente_nombre}}">{{$docente->docente_nombre}}</option>
                             @endforeach
@@ -263,7 +263,8 @@
                     <table class="table" id="detalle">
                         <tr>
                             <th scope="col">CODIGO</th>
-                            <th scope="col">DOCENTE</th>
+                            <th scope="col">DOCENTE</th>                            
+                            <th scope="col">PUESTO</th>
                             <th scope="col">ACCION</th>
                         </tr>
                     </table>
@@ -276,6 +277,7 @@
             data-bs-toggle="modal" data-bs-target="#exampleModal1" id="submitIF" disabled>Aprobar</button>
             </div>
         </div>
+    </div>
     </div>
     <!-- Modal Practica -->
     <div id="modalPreview" class="modal1">

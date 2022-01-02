@@ -9,7 +9,6 @@ class Jurado extends Model
 {
     use HasFactory;
     protected $guarded = [];
-    public $timestamps = false;
     protected $table = 'jurados';
 
     public function tesi(){

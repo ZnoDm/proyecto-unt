@@ -121,7 +121,7 @@ class PracticaController extends Controller
     public function edit(Practica $practica)
     {
         $docentes = Docente::where('docente_status','3')->orWhere('docente_status','1')->get();
-        $observacion = DB::table('practica_obervaciones')->where('practica_id',$practica->id)->latest('id')->first();
+        $observacion = DB::table('practica_observaciones')->where('practica_id',$practica->id)->latest('id')->first();
         return view('alumno.practica.edit',compact('practica','docentes','observacion'));        
     }
 
@@ -284,7 +284,7 @@ class PracticaController extends Controller
     }
     
     public function informefinaledit(Practica $practica){
-        $observacion = DB::table('practica_obervaciones')->where('practica_id',$practica->id)->latest('id')->first();
+        $observacion = DB::table('practica_observaciones')->where('practica_id',$practica->id)->latest('id')->first();
         return view('alumno.practica.informefinal-edit',compact('practica','observacion'));
     }
 

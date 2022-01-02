@@ -120,7 +120,7 @@ class Solicitud extends Component
         $practica = Practica::find($practicaId);
         if($estatus ==5){
             $practica->update(['practica_status' => 11]);
-            DB::table('practica_obervaciones')->insert([
+            DB::table('practica_observaciones')->insert([
             'po_detalle'=>$mensaje,
             'po_status'=>'DIRECTOR A ALUMNO',
             'practica_id'=>$practica->id,
@@ -129,7 +129,7 @@ class Solicitud extends Component
         }
         else{            
             $practica->update(['practica_status' => 9]);
-            DB::table('practica_obervaciones')->insert([
+            DB::table('practica_observaciones')->insert([
             'po_detalle'=>$mensaje,
             'po_status'=>'DIRECTOR A ALUMNO',
             'practica_id'=>$practica->id,
@@ -142,7 +142,7 @@ class Solicitud extends Component
     }
     
 
-    public function aprobarTesis($tesisId,$estatus,$temporal){
+    public function aprobarTesis($tesisId,$estatus,$temporal,$puestos_temporal){
         //Solicitud
         if($estatus==2){        
             $tesis = Tesis::find($tesisId);
@@ -157,14 +157,17 @@ class Solicitud extends Component
                 $tesis->update(['tesis_status' => 6]);
                 DB::table('jurados')->insert([
                     'tesis_id'=>$tesis->id,
+                    'puesto'=>$puestos_temporal[0],
                     'docente_id'=>$temporal[0]
                 ]);
                 DB::table('jurados')->insert([
-                    'tesis_id'=>$tesis->id,
+                    'tesis_id'=>$tesis->id,                    
+                    'puesto'=>$puestos_temporal[1],
                     'docente_id'=>$temporal[1]
                 ]);
                 DB::table('jurados')->insert([
-                    'tesis_id'=>$tesis->id,
+                    'tesis_id'=>$tesis->id,                    
+                    'puesto'=>$puestos_temporal[2],
                     'docente_id'=>$temporal[2]
                 ]);
                 session()->flash('info','Tesis IF Aprobado correctamente');

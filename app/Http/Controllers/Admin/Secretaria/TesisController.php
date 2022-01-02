@@ -62,7 +62,7 @@ class TesisController extends Controller
     {
         $tesis = Tesis::find($id);
         $alumno = Alumno::find($tesis->alumno_id);
-        $observacion = DB::table('practica_obervaciones')->where('practica_id',$tesis->id)->latest('id')->first();
+        $observacion = DB::table('practica_observaciones')->where('practica_id',$tesis->id)->latest('id')->first();
         return view('admin.secretaria.tesis.revision',compact('tesis','alumno','observacion'));
     }
 }

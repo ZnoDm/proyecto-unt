@@ -15,9 +15,9 @@ class CreateJuradoObservacionesTable extends Migration
     {
         Schema::create('jurado_observaciones', function (Blueprint $table) {
             $table->id();
-            $table->string('jo_detalle')->nullable();
-            $table->string('jo_respuesta')->nullable();
-            $table->string('jo_status'); //ESTATUS 1 = CREADA , ESTATUS=2, RESPONDIDA
+            $table->json('observacion')->nullable();
+            $table->json('respuesta')->nullable();
+            $table->int('jo_status'); //ESTATUS 1 = CREADA , ESTATUS=2 RESPONDIDA/FINALIZADA
             $table->unsignedBigInteger('jurado_id');
             $table->foreign('jurado_id')->references('id')->on('jurados');
             $table->timestamps();

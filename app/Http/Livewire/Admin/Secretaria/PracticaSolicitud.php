@@ -21,7 +21,7 @@ class PracticaSolicitud extends Component
     public function denegar($practicaId,$mensaje){
         $practica = Practica::find($practicaId);
         $practica->update(['practica_status' => 8]);
-        DB::table('practica_obervaciones')->insert([
+        DB::table('practica_observaciones')->insert([
             'po_detalle'=>$mensaje,
             'po_status'=>'SECRETARIA A ALUMNO',
             'practica_id'=>$practica->id,
