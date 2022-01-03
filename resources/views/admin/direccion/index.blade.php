@@ -147,7 +147,7 @@
                     confirmButtonText: 'De Acuerdo! '
                 }).then((result) => {
                 if (result.isConfirmed) {
-                    Livewire.emitTo('admin.direccion.solicitud','aprobarTesis',tesisId,estatus,temporal);
+                    Livewire.emitTo('admin.direccion.solicitud','aprobarTesis',tesisId,estatus,temporal,puestos_temporal);
                 }
                 })
         });
@@ -156,6 +156,7 @@
     <script type="text/javascript">
         
         var indice=0;
+        let puestos_temporal=[];
         let temporal=[];
         var suma_jurados=0;
         function agregar()
@@ -177,7 +178,10 @@
                     }
                     else{
                         temporal[indice] = docente[0];		
-                        fila='<tr id="fila'+indice+'"><td><input wire:model="jurado" type="hidden" name="docente_ids[]" value="'+docente[0]+'">'+docente[0]+'</td><td>'+docente[1]+'</td><td><a href="#" onclick="quitar('+indice+')" style="color:red;"><i class="far fa-trash-alt"></i></a></td></tr>';
+                        fila    =   '<tr id="fila'+indice+'"><td>'
+                                    +'COD-'+docente[0]+'</td><td>'+
+                                    '<select name="puesto_'+indice+'" id="puesto_'+indice+'" onchange="puesto('+indice+');"><option value="0" disabled selected>Selecciona</option><option value="PRESIDENTE">PRESIDENTE</option><option value="SECRETARIO">SECRETARIO</option><option value="VOCAL">VOCAL</option></select></td><td>'+
+                                    docente[1]+'</td><td><a href="#" onclick="quitar('+indice+')" style="color:red;"><i class="far fa-trash-alt"></i></a></td></tr>';
                         $('#detalle').append(fila);
                         indice++;
                         console.log(temporal);
@@ -188,10 +192,11 @@
             }
             if(suma_jurados==3)
                 document.getElementById('submitIF').disabled=false;
-            console.log(suma_jurados);
+            console.log('SUMA JURADOS: '+suma_jurados);
         }
         function quitar(item)
         {
+            puestos_temporal.splice(item, 1);
             temporal.splice(item, 1);
             console.log(temporal);
             $('#fila'+item).remove();
@@ -200,12 +205,35 @@
             if(suma_jurados < 3){
                 document.getElementById('submitIF').disabled=true;
             }
-            console.log(suma_jurados);
+            console.log('SUMA JURADOS: '+ suma_jurados);
         }
-
+        function puesto(indice)
+        {
+            console.log(indice);            
+            let elemento = document.getElementById('puesto_'+indice).value;
+            console.log(elemento);
+            
+            if(puestos_temporal.find(element => element == elemento))
+                {
+                    alert("No puede darle ese puesto, ya existe");
+                    document.getElementById('puesto_'+indice).selectedIndex ="0";
+                }
+            else
+                {
+                puestos_temporal[indice] = elemento;
+                alert("Puesto asignado")
+                }
+            console.log('PUESTOS: '+ puestos_temporal);
+            
+        }
         Livewire.on('AprobarTesisDireccionIF', () => {
-            console.log(tesisId+' - estado:'+tesisEstatus  + 'TESIS - Array Docentes ID:'+ temporal);
-            Livewire.emitTo('admin.direccion.solicitud','aprobarTesis',tesisId,tesisEstatus ,temporal);                
+            if(puestos_temporal.length >=3){                
+                console.log(tesisId+' - estado:'+tesisEstatus  + 'TESIS - Array Docentes ID:'+ temporal);
+                Livewire.emitTo('admin.direccion.solicitud','aprobarTesis',tesisId,tesisEstatus ,temporal,puestos_temporal);     
+            } else
+            {
+                alert('Agrega puestos');
+            }      
         });
 
     </script>

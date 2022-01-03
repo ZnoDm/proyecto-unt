@@ -110,7 +110,7 @@
                 <div class="col-span-2">
                     <label for="fecha_fin">Asesor 
                     <select name="docente_id" id="docente_id" class="w-full">
-                        <option value="-1">Lista de Docentes</option>
+                        <option value="-1" disabled selected>Lista de Docentes</option>
                         @foreach($docentes as $docente)
                             <option value="{{$docente->id}}">{{ucwords(strtolower($docente->docente_nombre))}}</option>
                         @endforeach

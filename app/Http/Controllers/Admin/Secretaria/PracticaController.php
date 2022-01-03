@@ -21,7 +21,7 @@ class PracticaController extends Controller
     {
         $practica = Practica::find($id);
         $alumno = Alumno::find($practica->alumno_id);
-        $observacion = DB::table('practica_obervaciones')->where('practica_id',$practica->id)->latest('id')->first();
+        $observacion = DB::table('practica_observaciones')->where('practica_id',$practica->id)->latest('id')->first();
         return view('admin.secretaria.practica.revision',compact('practica','alumno','observacion'));
     }
 }

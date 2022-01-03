@@ -11,7 +11,7 @@ use App\Http\Controllers\Admin\Secretaria\TesisController;
 use App\Http\Livewire\Admin\Almacen\AlmacenDocente;
 use App\Models\Docente;
 
-Route::get('', function () {
+Route::get('/', function () {
      return view('admin.index');
 })->middleware('can:Ver Administrador Dashboard')->name('admin.home');
 
@@ -34,6 +34,7 @@ Route::get('/jurados', [AdminController::class, 'jurados'])->name('admin.jurados
 Route::get('/empresas', [AdminController::class, 'empresas'])->name('admin.empresas'); //Empresas
 Route::get('/vouchers', [AdminController::class, 'vouchers'])->name('admin.vouchers'); //Vouchers
 
+<<<<<<< HEAD
 /* 
 Route::resource('/roles', RoleController::class)->names('admin.roles');
 Route::get('/docente/{docente}', [DocenteController::class,'show'])->name('admin.docente.show');
@@ -42,21 +43,6 @@ Route::post('/docente/asignado', [DocenteController::class,'asignado'])->name('a
 Route::get('/empresas', [AdminController::class,'empresa'])->name('admin.empresa');
 Route::get('/vouchers', [AdminController::class,'voucher'])->name('admin.voucher');
 Route::get('/estadistica/grafico1', [AdminController::class,'grafico1'])->name('grafico1');
+=======
+>>>>>>> 5c1b65e18b84cb96451e23a5cbec975fb7a31598
 
-
-
-
-
-Route::post('/practica/aprobar/{id}/{alumno}/{estado}', [PracticaController::class,'aprobar'])->name('admin.practica.aprobar');
-Route::post('/practica/denegar/{id}/{alumno}/{estado}', [PracticaController::class,'denegar'])->name('admin.practica.denegar');
-Route::get('/f_practicas', [PracticaController::class,'practicas_finalizadas'])->name('admin.finalizadaspracicas');
-Route::get('/practica/show/{id}', [PracticaController::class,'show'])->name('admin.practica.show');
-Route::post('/tesis/aprobar/{id}/{alumno}/{estado}', [TesisController::class,'aprobar'])->name('admin.tesis.aprobar');
-Route::post('/tesis/denegar/{id}/{alumno}/{estado}', [TesisController::class,'denegar'])->name('admin.tesis.denegar');
-Route::get('/f_tesis', [TesisController::class,'sustenacion'])->name('admin.tesisfinalizadas');
-Route::get('/f_calificar/{id}', [TesisController::class,'calificar'])->name('admin.tesis.calificar');
-Route::post('/calificando', [TesisController::class,'calificando'])->name('admin.tesis.calificando');
-Route::get('/f_asignar_fecha/{id}', [TesisController::class,'asignar_fecha'])->name('admin.tesis.asignar_fecha');
-Route::post('/asignando_fecha', [TesisController::class,'asignando_fecha'])->name('admin.tesis.asignando_fecha');
-Route::get('/finalizadas', [TesisController::class,'tesis'])->name('admin.tesis.tesfinales');
-Route::get('/finalizadas/show/{id}', [TesisController::class,'show'])->name('admin.tesis.show'); */

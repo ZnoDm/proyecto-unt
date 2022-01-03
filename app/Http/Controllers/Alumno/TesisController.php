@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Alumno;
 use App\Models\Docente;
 use App\Models\Fut;
+use App\Models\Jurado;
 use App\Models\Practica;
 use App\Models\Tesis;
 use App\Models\Voucher;
@@ -104,7 +105,8 @@ class TesisController extends Controller
     //PROGRESO
     public function show(Tesis $tesi)
     {
-        return view('alumno.tesis.progreso',compact('tesi'));
+        $jurados= Jurado::where('tesis_id',$tesi->id)->get();
+        return view('alumno.tesis.progreso',compact('tesi','jurados'));
     }
     public function edit($id)
     {
