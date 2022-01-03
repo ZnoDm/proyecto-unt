@@ -21,7 +21,7 @@ class JuradoObservacion extends Component
         $this->validate();
         $url='';
         if($this->file_tesis){            
-            $file = $this->file_tesis->store('public/tesis/revisiones');
+            $file = $this->file_tesis->store('tesis/revisiones');
             $url =Storage::url($file);
         }
         DB::table('jurado_observaciones')->where('id',$respuestaa)->update([

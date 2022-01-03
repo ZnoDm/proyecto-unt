@@ -63,20 +63,20 @@ class TesisController extends Controller
 
         $alumno = Alumno::firstWhere(['alumno_email'=>auth()->user()->email]);
 
-        $file_voucher = $request->file('file_voucher')->store('public/tesis/vouchers');
+        $file_voucher = $request->file('file_voucher')->store('tesis/vouchers');
         $url_file_voucher =Storage::url($file_voucher);
         $voucher = Voucher::create([
             'voucher_nro' => $request->nro,
             'voucher_url' => $url_file_voucher,
         ]);
 
-        $file_fut = $request->file('file_fut')->store('public/tesis/futs');
+        $file_fut = $request->file('file_fut')->store('tesis/futs');
         $url_file_fut =Storage::url($file_fut);
         $fut = Fut::create([
             'fut_url' => $url_file_fut,
         ]);
 
-        $file_tesis =$request->file('file_tesis')->store('public/tesis/planes');
+        $file_tesis =$request->file('file_tesis')->store('tesis/planes');
         $url_file_tesis =Storage::url($file_tesis);
 
         $tesis = Tesis::create([
@@ -123,7 +123,7 @@ class TesisController extends Controller
                 'file_tesis' => 'required',
                 
             ]);
-            $file_tesis = $request->file('file_tesis')->store('public/tesis/planes');
+            $file_tesis = $request->file('file_tesis')->store('tesis/planes');
             $url_file_tesis =Storage::url($file_tesis);
             $tesi->update([
                 'tesis_file_tesis' => $url_file_tesis,
@@ -164,7 +164,7 @@ class TesisController extends Controller
             if($request->file('file_voucher') || $tesi->vouchers->first()->voucher_nro != $request->nro){
                 
                 $request->validate([ 'file_voucher' => 'required' ]); 
-                $file_voucher = $request->file('file_voucher')->store('public/tesis/vouchers');
+                $file_voucher = $request->file('file_voucher')->store('tesis/vouchers');
                 $url_file_voucher =Storage::url($file_voucher);
     
                 if($tesi->vouchers->first()->voucher_nro == $request->nro){
@@ -181,7 +181,7 @@ class TesisController extends Controller
             }
             if($request->file('file_fut')){
                 Storage::delete($tesi->futs->first()->voucher_url);
-                $file_fut = $request->file('file_fut')->store('public/tesis/futs');
+                $file_fut = $request->file('file_fut')->store('tesis/futs');
                 $url_file_fut =Storage::url($file_fut);
                 $tesi->futs->first()->update([                    
                     'fut_url' => $url_file_fut,
@@ -189,7 +189,7 @@ class TesisController extends Controller
             }
             
             if($request->file('file_tesis')){
-                $file_tesis = $request->file('file_tesis')->store('public/tesis/planes');
+                $file_tesis = $request->file('file_tesis')->store('tesis/planes');
                 $url_file_tesis =Storage::url($file_tesis);
                 $tesi->update([
                     'tesis_file_tesis' => $url_file_tesis,
@@ -223,13 +223,13 @@ class TesisController extends Controller
             'file_informefinal' => 'required',
         ]);
 
-        $file_voucher = $request->file('file_voucher')->store('public/tesis/vouchers');
+        $file_voucher = $request->file('file_voucher')->store('tesis/vouchers');
         $url_file_voucher =Storage::url($file_voucher);
 
-        $file_fut =$request->file('file_fut')->store('public/tesis/futs');
+        $file_fut =$request->file('file_fut')->store('tesis/futs');
         $url_file_fut =Storage::url($file_fut);
 
-        $file_informefinal = $request->file('file_informefinal')->store('public/tesis/informe-final');
+        $file_informefinal = $request->file('file_informefinal')->store('tesis/informe-final');
         $url_file_informefinal =Storage::url($file_informefinal);
         
         $voucher = Voucher::create([
@@ -268,7 +268,7 @@ class TesisController extends Controller
             $request->validate([
                 'file_informefinal' => 'required'
             ]);  
-            $file_informefinal = $request->file('file_informefinal')->store('public/tesis/informe-final');
+            $file_informefinal = $request->file('file_informefinal')->store('tesis/informe-final');
             $url_file_informefinal =Storage::url($file_informefinal);
             $tesi->update([
                 'tesis_status' => 5,
@@ -282,7 +282,7 @@ class TesisController extends Controller
             if($request->file('file_voucher') || $tesi->vouchers->last()->voucher_nro != $request->nro){
                 
                 $request->validate([ 'file_voucher' => 'required']); 
-                $file_voucher = $request->file('file_voucher')->store('public/tesis/vouchers');
+                $file_voucher = $request->file('file_voucher')->store('tesis/vouchers');
                 $url_file_voucher =Storage::url($file_voucher);
     
                 if($tesi->vouchers->last()->voucher_nro == $request->nro){
@@ -299,14 +299,14 @@ class TesisController extends Controller
             }
             if($request->file('file_fut')){
                 Storage::delete($tesi->futs->last()->voucher_url);
-                $file_fut = $request->file('file_fut')->store('public/tesis/futs');
+                $file_fut = $request->file('file_fut')->store('tesis/futs');
                 $url_file_fut =Storage::url($file_fut);
                 $tesi->futs->last()->update([                    
                     'fut_url' => $url_file_fut,
                 ]);
             }
             if($request->file('file_informefinal')){
-                $file_informefinal = $request->file('file_informefinal')->store('public/tesis/informe-final');
+                $file_informefinal = $request->file('file_informefinal')->store('tesis/informe-final');
                 $url_file_informefinal =Storage::url($file_informefinal);
                 $tesi->update([
                     'tesis_file_informefinal' => $url_file_informefinal,

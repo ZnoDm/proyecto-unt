@@ -28,7 +28,7 @@ class PermissionSeeder extends Seeder
         /*Director*/         
         Permission::create(['name'=>'Ver Director Solicitudes']); // 7
 
-        /*Docente*/         
-        Permission::create(['name'=>'Ver DocenteSolicitudes']);  // 8
+        /*Docente Jurado*/         
+        Permission::create(['name'=>'Ver Docente Solicitudes']);  // 8
     }
 }

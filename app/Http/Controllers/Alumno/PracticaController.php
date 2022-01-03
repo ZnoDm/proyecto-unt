@@ -67,14 +67,14 @@ class PracticaController extends Controller
         ]);
         $alumno = Alumno::firstWhere(['alumno_email'=>auth()->user()->email]);
 
-        $file_voucher = $request->file('file_voucher')->store('public/practicas/vouchers');
+        $file_voucher = $request->file('file_voucher')->store('practicas/vouchers');
         $url_file_voucher =Storage::url($file_voucher);
         $voucher = Voucher::create([
             'voucher_nro' => $request->nro,
             'voucher_url' => $url_file_voucher,
         ]);
 
-        $file_fut = $request->file('file_fut')->store('public/practicas/futs');
+        $file_fut = $request->file('file_fut')->store('practicas/futs');
         $url_file_fut =Storage::url($file_fut);
         $fut = Fut::create([
             'fut_url' => $url_file_fut,
@@ -87,7 +87,7 @@ class PracticaController extends Controller
             'empresa_supervisor' => $request->supervisor,
             'empresa_telefono' => $request->telefono,
         ]);
-        $file_practica =$request->file('file_practica')->store('public/practicas/planes');
+        $file_practica =$request->file('file_practica')->store('practicas/planes');
         $url_file_practica =Storage::url($file_practica);
         $practica = Practica::create([            
             'practica_fechainicio' => $request->fecha_inicio,            
@@ -133,7 +133,7 @@ class PracticaController extends Controller
                 'file_practica' => 'required',
                 
             ]);
-            $file_practica = $request->file('file_practica')->store('public/practicas/planes');
+            $file_practica = $request->file('file_practica')->store('practicas/planes');
             $url_file_practica =Storage::url($file_practica);
             $practica->update([
                 'practica_file_practica_url' => $url_file_practica,
@@ -184,7 +184,7 @@ class PracticaController extends Controller
             ]);
     
             if($request->file('file_practica')){
-                $file_practica = $request->file('file_practica')->store('public/practicas/planes');
+                $file_practica = $request->file('file_practica')->store('practicas/planes');
                 $url_file_practica =Storage::url($file_practica);
                 $practica->update([
                     'practica_file_practica_url' => $url_file_practica,
@@ -194,7 +194,7 @@ class PracticaController extends Controller
             if($request->file('file_voucher') || $practica->vouchers->first()->voucher_nro != $request->nro){
                 
                 $request->validate([ 'file_voucher' => 'required']); 
-                $file_voucher = $request->file('file_voucher')->store('public/practicas/vouchers');
+                $file_voucher = $request->file('file_voucher')->store('practicas/vouchers');
                 $url_file_voucher =Storage::url($file_voucher);
     
                 if($practica->vouchers->first()->voucher_nro == $request->nro){
@@ -212,7 +212,7 @@ class PracticaController extends Controller
     
             if($request->file('file_fut')){
                 Storage::delete($practica->futs->first()->voucher_url);
-                $file_fut = $request->file('file_fut')->store('public/practicas/futs');
+                $file_fut = $request->file('file_fut')->store('practicas/futs');
                 $url_file_fut =Storage::url($file_fut);
                 $practica->futs->first()->update([                    
                     'fut_url' => $url_file_fut,
@@ -246,16 +246,16 @@ class PracticaController extends Controller
             'file_informefinal' => 'required',
             'file_certificado' => 'required',
         ]);    
-        $file_voucher = $request->file('file_voucher')->store('public/practicas/vouchers');
+        $file_voucher = $request->file('file_voucher')->store('practicas/vouchers');
         $url_file_voucher =Storage::url($file_voucher);
 
-        $file_fut =$request->file('file_fut')->store('public/practicas/futs');
+        $file_fut =$request->file('file_fut')->store('practicas/futs');
         $url_file_fut =Storage::url($file_fut);
 
-        $file_informefinal = $request->file('file_informefinal')->store('public/practicas/informe-final');
+        $file_informefinal = $request->file('file_informefinal')->store('practicas/informe-final');
         $url_file_informefinal =Storage::url($file_informefinal);
 
-        $file_certificado = $request->file('file_certificado')->store('public/practicas/certificados');
+        $file_certificado = $request->file('file_certificado')->store('practicas/certificados');
         $url_file_certificado =Storage::url($file_certificado);
 
         $voucher = Voucher::create([
@@ -294,7 +294,7 @@ class PracticaController extends Controller
             $request->validate([
             'file_informefinal' => 'required'
             ]);  
-            $file_informefinal = $request->file('file_informefinal')->store('public/practicas/informe-final');
+            $file_informefinal = $request->file('file_informefinal')->store('practicas/informe-final');
             $url_file_informefinal =Storage::url($file_informefinal);
             $practica->update([
                 'practica_status' => 5,
@@ -308,7 +308,7 @@ class PracticaController extends Controller
             if($request->file('file_voucher') || $practica->vouchers->last()->voucher_nro != $request->nro){
                 
                 $request->validate([ 'file_voucher' => 'required']); 
-                $file_voucher = $request->file('file_voucher')->store('public/practicas/vouchers');
+                $file_voucher = $request->file('file_voucher')->store('practicas/vouchers');
                 $url_file_voucher =Storage::url($file_voucher);
     
                 if($practica->vouchers->last()->voucher_nro == $request->nro){
@@ -325,21 +325,21 @@ class PracticaController extends Controller
             }
             if($request->file('file_fut')){
                 Storage::delete($practica->futs->last()->voucher_url);
-                $file_fut = $request->file('file_fut')->store('public/practicas/futs');
+                $file_fut = $request->file('file_fut')->store('practicas/futs');
                 $url_file_fut =Storage::url($file_fut);
                 $practica->futs->last()->update([                    
                     'fut_url' => $url_file_fut,
                 ]);
             }
             if($request->file('file_informefinal')){
-                $file_informefinal = $request->file('file_informefinal')->store('public/practicas/informe-final');
+                $file_informefinal = $request->file('file_informefinal')->store('practicas/informe-final');
                 $url_file_informefinal =Storage::url($file_informefinal);
                 $practica->update([
                     'practica_file_practica_url' => $url_file_informefinal,
                 ]);
             }
             if($request->file('file_certificado')){
-                $file_certificado = $request->file('file_certificado')->store('public/practicas/informe-final');
+                $file_certificado = $request->file('file_certificado')->store('practicas/informe-final');
                 $url_file_certificado =Storage::url($file_certificado);
                 $practica->update([
                     'practica_certificado_url'=> $url_file_certificado,

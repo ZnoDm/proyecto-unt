@@ -275,14 +275,14 @@ return [
             'can' => 'Ver Director Solicitudes',
         ],
         ['header' => 'DOCENTE',
-            'can' => 'Ver DocenteSolicitudes'
+            'can' => 'Ver Docente Solicitudes'
         ],
         [
             'text' => 'Pendientes',
             'active'      => ['admin/docente*'],
             'route' => 'admin.docente.index',
             'icon' => 'fas fa-envelope',
-            'can' => 'Ver DocenteSolicitudes',
+            'can' => 'Ver Docente Solicitudes',
         ],
         ['header' => 'ESTADISTICAS'],
         [
