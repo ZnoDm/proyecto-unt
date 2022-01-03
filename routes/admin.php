@@ -9,7 +9,7 @@ use App\Http\Controllers\Admin\Docente\DocenteController as DocenteJurado;
 use App\Http\Controllers\Admin\Secretaria\PracticaController;
 use App\Http\Controllers\Admin\Secretaria\TesisController;
 
-Route::get('', function () {
+Route::get('/', function () {
      return view('admin.index');
 })->middleware('can:Ver Administrador Dashboard')->name('admin.home');
 

@@ -147,7 +147,7 @@
                     confirmButtonText: 'De Acuerdo! '
                 }).then((result) => {
                 if (result.isConfirmed) {
-                    Livewire.emitTo('admin.direccion.solicitud','aprobarTesis',tesisId,estatus,temporal);
+                    Livewire.emitTo('admin.direccion.solicitud','aprobarTesis',tesisId,estatus,temporal,puestos_temporal);
                 }
                 })
         });

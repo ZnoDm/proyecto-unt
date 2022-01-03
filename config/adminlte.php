@@ -188,7 +188,7 @@ return [
     */
 
     'use_route_url' => false,
-    'dashboard_url' => '',
+    'dashboard_url' => '/admin',
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',
@@ -273,6 +273,16 @@ return [
             'route' => 'admin.direccion.index',
             'icon' => 'fas fa-envelope',
             'can' => 'Ver Director Solicitudes',
+        ],
+        ['header' => 'DOCENTE',
+            'can' => 'Ver DocenteSolicitudes'
+        ],
+        [
+            'text' => 'Pendientes',
+            'active'      => ['admin/docente*'],
+            'route' => 'admin.docente.index',
+            'icon' => 'fas fa-envelope',
+            'can' => 'Ver DocenteSolicitudes',
         ],
         ['header' => 'ESTADISTICAS'],
         [

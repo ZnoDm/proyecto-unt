@@ -158,17 +158,20 @@ class Solicitud extends Component
                 DB::table('jurados')->insert([
                     'tesis_id'=>$tesis->id,
                     'puesto'=>$puestos_temporal[0],
-                    'docente_id'=>$temporal[0]
+                    'docente_id'=>$temporal[0],
+                    'status'=>1
                 ]);
                 DB::table('jurados')->insert([
                     'tesis_id'=>$tesis->id,                    
                     'puesto'=>$puestos_temporal[1],
-                    'docente_id'=>$temporal[1]
+                    'docente_id'=>$temporal[1],
+                    'status'=>1
                 ]);
                 DB::table('jurados')->insert([
                     'tesis_id'=>$tesis->id,                    
                     'puesto'=>$puestos_temporal[2],
-                    'docente_id'=>$temporal[2]
+                    'docente_id'=>$temporal[2],
+                    'status'=>1
                 ]);
                 session()->flash('info','Tesis IF Aprobado correctamente');
         }

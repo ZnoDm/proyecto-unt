@@ -3,7 +3,7 @@
         <h2 class="text-lg mb-7 text-center">Espere a que se pongan en contacto con usted, caso contrario comuniquese con sus asesores.</h2>
         @foreach ($jurados as $jurado)
         <article class="mb-6" x-data="{open:false}">
-            <div class="rounded shadow-xl px-6 py-4 bg-gray-100 x-data="{open:true}">
+            <div class="rounded shadow-xl px-6 py-4 bg-gray-100">
                 <div class="px-6 py-4 flex justify-between">
                     <div>
                         <p class="font-semibold text-lg ">{{$jurado->docente->docente_nombre}}</p>
@@ -19,7 +19,13 @@
                     <span class="text-gray-500">Correo: {{$jurado->docente->docente_email}}</span> <br>
                     <span class="text-gray-500">Telefono: {{$jurado->docente->docente_telefono}}</span> <br>
                     <hr class="my-2">
-                    @livewire('alumno.jurado-observacion', ['jurado' => $jurado], key($jurado->id))
+                    @if ($jurado->status == 1)                        
+                        @livewire('alumno.jurado-observacion', ['jurado' => $jurado], key($jurado->id))
+                    @else
+                    <div class="text-center">
+                        ACEPTADA POR EL JURADO
+                    </div>
+                    @endif
                 </div>
             </div>
         </article>

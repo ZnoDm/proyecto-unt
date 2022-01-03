@@ -1,6 +1,14 @@
 <x-alumno-layout>
     @php
-        $status = $tesi->tesis_status;
+        $status = $tesi->tesis_status;        
+        $suma=0;
+        if($jurados->count()){
+            foreach ($jurados as $jurado) {
+                if($jurado->status==2){                    
+                    $suma=$suma+1;
+                }
+            }
+        }
     @endphp
     {{-- Barra de Progreso --}}
     @if($status ==1 or $status==2 or $status == 4 or $status ==5 or $status ==6)
@@ -26,7 +34,7 @@
                 </div>
             
                 <div class="flex-1">
-                    <div class="{{($status==6) ? 'bg-green-500 text-white': 
+                    <div class="{{($status==6 or $suma==3) ? 'bg-green-500 text-white': 
                                 (($status==9) ? 'bg-red-500 text-white':'border-2')}} 
                                 w-10 h-10 mx-auto rounded-full text-lg  flex items-center">
                         <span class="text-center w-full">
@@ -52,20 +60,24 @@
             
                 <div class="w-1/4 align-center items-center align-middle content-center flex pb-6">
                     <div class="w-full bg-gray-200 rounded items-center align-middle align-center flex-1">
-                        <div class="bg-green-500 text-xs leading-none py-1 text-center rounded " style="width: {{($status==6) ? '100%' : '0%'}}"></div>
+                        <div class="bg-green-500 text-xs leading-none py-1 text-center rounded " style="width: {{($status==6 or $suma==3) ? '100%' : '0%'}}"></div>
                     </div>
                     
                 </div>
             
                 <div class="flex-1">
-                    <div class="{{($status==7) ? 'bg-green-500 text-white' : 'border-2'}} w-10 h-10 mx-auto rounded-full text-lg  flex items-center">
+                    <div class="{{($status==7 or $suma==3) ? 'bg-green-500 text-white' : 'border-2'}} w-10 h-10 mx-auto rounded-full text-lg  flex items-center">
                         <span class="text-center w-full">
                             @switch($status)
                                 @case(6)
-                                    <i class="fas fa-question"></i>
+                                    @if ($suma==3)                
+                                        <i class="fas fa-check"></i>       
+                                    @else           
+                                        <i class="fas fa-question"></i>
+                                    @endif
                                     @break
-                                @case(7)
-                                    <i class="fas fa-check"></i>
+                                @case(7)               
+                                    <i class="fas fa-check"></i>     
                                     @break
                                 @default
                                     2
@@ -78,15 +90,15 @@
                 </div>
                 <div class="w-1/4 align-center items-center align-middle content-center flex pb-6">
                     <div class="w-full bg-gray-200 rounded items-center align-middle align-center flex-1">
-                        <div class="bg-green-500 text-xs leading-none py-1 text-center rounded " style="width: {{($status==7) ? '100%' : '0%'}}"></div>
+                        <div class="bg-green-500 text-xs leading-none py-1 text-center rounded " style="width: {{($status==7 or $suma==3) ? '100%' : '0%'}}"></div>
                     </div>
                     
                 </div>
             
                 <div class="flex-1">
-                    <div class="{{($status==7) ? 'bg-green-500 text-white' : 'border-2'}} w-10 h-10 mx-auto rounded-full text-lg  flex items-center">
+                    <div class="{{($status==7 or $suma==3) ? 'bg-green-500 text-white' : 'border-2'}} w-10 h-10 mx-auto rounded-full text-lg  flex items-center">
                         <span class="text-center w-full">
-                            @if ($status ==7) <i class="fas fa-check"></i>
+                            @if ($status ==7 or $suma==3) <i class="fas fa-check"></i>
                             @else 4
                             @endif
                         </span>
@@ -111,7 +123,11 @@
         </div>
     @else
         @if($status ==6)
-            @livewire('alumno.jurados',['tesis' => $tesi])            
+            @if ($suma==3)
+                <h2 class="text-xl font-bold mt-4 text-center">EL JURADO ACEPTO SU INFORME</h2>
+            @else            
+                @livewire('alumno.jurados',['tesis' => $tesi]) 
+            @endif           
         @else
             @if($status ==7)
                 <h2 class="text-xl font-bold mt-4 text-center">PROCESO FINALIZADO</h2>
