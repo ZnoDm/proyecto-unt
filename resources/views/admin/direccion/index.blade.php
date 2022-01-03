@@ -55,15 +55,45 @@
     </style> 
 @stop
 
-
 @section('js')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>    
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    {{--Modal--}}
+    {{--Recojer practica ID--}}
     <script>
-        let modalP = document.querySelector("#modalPractica");
-        let spanP = document.querySelector("#closePractica");     
+        let tipo;
+        let practicaId,practicaEstatus;
+        function recogerPracticaId(sendId,sendEstatus){           
+            practicaId = sendId;
+            practicaEstatus = sendEstatus;  
+            tipo='PRACTICA';       
+            console.log(practicaId+' - estado: '+ practicaEstatus+tipo);  
+        }
+    </script>
+    {{--Recojer tesis ID--}}
+    <script>
+        let tesisId,tesisEstatus;
+        function recogerTesisId(sendId,sendEstatus){           
+            tesisId = sendId;
+            tesisEstatus = sendEstatus;
+            tipo='TESIS';         
+            console.log(tesisId+' - estado: '+ tesisEstatus+tipo);  
+        }
+    </script>
+    {{--Denegar para ambos--}}
+    <script>
+        Livewire.on('CargarMensaje', () => {            
+            var mensajito =document.querySelector('textarea[id="mensajito"]').value;
+            if(tipo=='TESIS' ){
+                Livewire.emitTo('admin.direccion.solicitud','denegarTesis',tesisId,mensajito,tesisEstatus);
+            }else{                
+                Livewire.emitTo('admin.direccion.solicitud','denegarPractica',practicaId,mensajito,practicaEstatus);
+            }          
+        });
+    </script>
+    {{--Modal Preview ambos--}}
+    <script>
+        let modalP = document.querySelector("#modalPreview");
+        let spanP = document.querySelector("#closePreview");     
         spanP.onclick = function() {
                 modalP.style.display = "none";
         }
@@ -72,21 +102,21 @@
                 modalP.style.display = "none";
             }
         }
-              
-        Livewire.on('CargarModal',src =>{           
+        Livewire.on('CargarModal',(src,tipo) =>{    
+            console.log(tipo);                   
             console.log(src);
-            
             document.querySelector('#preview').setAttribute('src', src);
-            document.querySelector("#modalPractica").style.display = "block";  
+            document.querySelector("#modalPreview").style.display = "block";  
         });      
     </script>
-    
+ 
     {{--Aprobar practicas--}}
     <script>
         Livewire.on('AprobarPracticaDireccion', (practicaId,estatus) => {
+            console.log(practicaId+' - estado: '+estatus + 'PRACTICA');
             Swal.fire({
                     title: 'Esta seguro?',
-                    text: "Esta apunto de aprobar esta solicitud!",
+                    text: "Esta apunto de aprobar esta solicitud de practica!",
                     icon: 'warning',
                     showCancelButton: true,
                     cancelButtonText: 'Cancelar',
@@ -100,26 +130,15 @@
                 })
         });
     </script>
-    {{--Denegar practica--}}
-    <script>
-        let practicaId,estatus;
-        function recogerPracticaId(sendId,sendEstatus){           
-            practicaId = sendId;
-            estatus = sendEstatus;         
-            console.log(practicaId+' - '+ estatus);  
-        }
-
-        Livewire.on('CargarMensaje', () => {          
-            var mensajito =document.querySelector('textarea[id="mensajito"]').value;
-            Livewire.emitTo('admin.direccion.solicitud','denegarPractica',practicaId,mensajito,estatus);
-        });
-    </script>
-    {{--tesis--}}
+    {{--TESIS--}}     
+    {{--Aprobar tesis--}}
     <script>        
         Livewire.on('AprobarTesisDireccion', (tesisId,estatus) => {
+            console.log(tesisId+' - estado:'+estatus + 'TESIS - Array Docentes ID:'+ temporal);
+            
             Swal.fire({
                     title: 'Esta seguro?',
-                    text: "Esta apunto de aprobar esta solicitud!",
+                    text: "Esta apunto de aprobar esta solicitud de tesis!",
                     icon: 'warning',
                     showCancelButton: true,
                     cancelButtonText: 'Cancelar',
@@ -128,29 +147,14 @@
                     confirmButtonText: 'De Acuerdo! '
                 }).then((result) => {
                 if (result.isConfirmed) {
-                    Livewire.emitTo('admin.direccion.solicitud','aprobarTesis',tesisId,estatus);
+                    Livewire.emitTo('admin.direccion.solicitud','aprobarTesis',tesisId,estatus,temporal);
                 }
                 })
         });
     </script>
-    <script>
-        Livewire.on('AprobarTesisDireccionIF', (tesisId,estatus) => {
-            Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it! '+ tesisId+ estatus+ temporal,
-                }).then((result) => {
-                if (result.isConfirmed) {
-                    Livewire.emitTo('admin.direccion.solicitud','aprobarTesisIF',tesisId,estatus,temporal);
-                }
-                })
-        });
-    </script>
+    {{--Aprobar tesis IF--}}
     <script type="text/javascript">
+        
         var indice=0;
         let temporal=[];
         var suma_jurados=0;
@@ -173,14 +177,17 @@
                     }
                     else{
                         temporal[indice] = docente[0];		
-                    fila='<tr id="fila'+indice+'"><td><input wire:model="jurado" type="hidden" name="docente_ids[]" value="'+docente[0]+'">'+docente[0]+'</td><td>'+docente[1]+'</td><td><a href="#" onclick="quitar('+indice+')" style="color:red;"><i class="far fa-trash-alt"></i></a></td></tr>';
-                    $('#detalle').append(fila);
-                    indice++;
-                    console.log(temporal);
+                        fila='<tr id="fila'+indice+'"><td><input wire:model="jurado" type="hidden" name="docente_ids[]" value="'+docente[0]+'">'+docente[0]+'</td><td>'+docente[1]+'</td><td><a href="#" onclick="quitar('+indice+')" style="color:red;"><i class="far fa-trash-alt"></i></a></td></tr>';
+                        $('#detalle').append(fila);
+                        indice++;
+                        console.log(temporal);
+                        
                     }
                     
                 }
             }
+            if(suma_jurados==3)
+                document.getElementById('submitIF').disabled=false;
             console.log(suma_jurados);
         }
         function quitar(item)
@@ -190,10 +197,17 @@
             $('#fila'+item).remove();
             indice--;
             suma_jurados = suma_jurados - 1;
-            if(suma_jurados === 0){
-                document.getElementById('submit').disabled=true;
+            if(suma_jurados < 3){
+                document.getElementById('submitIF').disabled=true;
             }
             console.log(suma_jurados);
         }
+
+        Livewire.on('AprobarTesisDireccionIF', () => {
+            console.log(tesisId+' - estado:'+tesisEstatus  + 'TESIS - Array Docentes ID:'+ temporal);
+            Livewire.emitTo('admin.direccion.solicitud','aprobarTesis',tesisId,tesisEstatus ,temporal);                
+        });
+
     </script>
+    
 @stop

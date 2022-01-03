@@ -64,11 +64,6 @@
 
 
         {{--Scripts--}}
-        <script>
-            document.querySelector('#alerta-close').onclick = ()=> {
-                document.querySelector('#alerta').style.display = "none";
-            }
-        </script>
         @stack('scripts')
 
         @livewireScripts

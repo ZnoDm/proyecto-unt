@@ -7,92 +7,157 @@
 
 @section('content')
 
+@php
+    if(empty($observacion)){
+      $observacion_test ='';
+    }else {
+      $observacion_test =$observacion->po_detalle;
+    }
+@endphp
+
 @if ($tesis->tesis_status ==1)
-  @livewire('admin.secretaria.tesis-solicitud', ['alumno' => $alumno,'tesis' => $tesis])
+  @livewire('admin.secretaria.tesis-solicitud', ['alumno' => $alumno,'tesis' => $tesis,'observacion'=>$observacion_test])
 @else
-  @livewire('admin.secretaria.tesis-informe-final', ['alumno' => $alumno,'tesis' => $tesis])
+  @livewire('admin.secretaria.tesis-informe-final', ['alumno' => $alumno,'tesis' => $tesis, 'observacion' => $observacion_test])
 @endif
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Mandar Correcciones</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="p-2">{{-- 
-            {{route('admin.tesis.denegar',['id'=>$tesis->id,'alumno' =>$tesis->alumno_codigo,'estado' =>$estado])}} --}}
-            <form action="" method="post">
-                @csrf
-                <label for="descripcion">Observaciones:</label>
-                <textarea name="descripcion" id="descripcion" cols="30" rows="10" class="mb-2"></textarea>
-                @error('descripcion')
-                <span>
-                    <strong class="text-red-500">{{$message}}</strong>
-                </span>
-                @enderror
-                <input type="submit" value="Enviar" class="btn btn-success w-full btn-block mt-2">
-            </form>
-        </div>
-        
-      </div>
-    </div>
-</div>
-
 @stop
-
 @section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">    
-@stop
+  <style>
+        
+    .modal1 {
+        display: none;
+        position: fixed; /* Stay in place */
+        z-index: 99999; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
 
+    /* Modal Content/Box */
+    .modal-content1 {
+        background-color: #fefefe;
+        margin: 20px 100px 10px 100px; 
+        padding: 15px;
+        border: 1px solid #888;
+        border-radius: 10px;
+        height: 95%;
+    }
+
+    /* The Close Button */
+    .close1 {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    }
+
+    .close1:hover,
+    .close1:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+    }
+  </style>   
+@stop
 @section('js')
+  {{--Modales FUT--}}
+  <script>          
+    let modal = document.querySelector("#modalFUT");
+    let span = document.querySelector("#closeFUT");             
+    let boton = document.querySelector('#btnFUT');
+
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+    window.onclick = ()=> {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+    boton.onclick = ()=>{                    
+            modal.style.display = "block";
+    }        
+  </script>
+  {{--Modales Tesis--}}
+  <script>
+                
+    let modalP = document.querySelector("#modalTesis");
+    let spanP = document.querySelector("#closeTesis");             
+    let botonP = document.querySelector('#btnTesis');
+
+    spanP.onclick = function() {
+        modalP.style.display = "none";
+    }
+    window.onclick = ()=> {
+        if (event.target == modalP) {
+            modalP.style.display = "none";
+        }
+    }
+
+    botonP.onclick = ()=>{                    
+       modalP.style.display = "block";
+    }        
+  </script>
+  {{--SweetAlert--}}
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  {{--Secretaria aprueba tesis--}}
   <script>
     Livewire.on('enviarDireccion', tesisId => {
           Swal.fire({
-                  title: 'Are you sure?',
-                  text: "You won't be able to revert this!",
+                  title: 'Esta seguro?',
+                  text: "Esta apunto de enviar la tesis al director de escuela!",
                   icon: 'warning',
                   showCancelButton: true,
-                  confirmButtonColor: '#3085d6',
+                  cancelButtonText: 'Cancelar',
+                  confirmButtonColor: '#2ECC71',
                   cancelButtonColor: '#d33',
-                  confirmButtonText: 'Yes, delete it! '+tesisId
+                  confirmButtonText: 'De Acuerdo! '
               }).then((result) => {
               if (result.isConfirmed) {
                   Livewire.emitTo('admin.secretaria.tesis-solicitud','enviar',tesisId);
-                  Swal.fire(
-                  'Deleted!',
-                  'Your file has been deleted.',
-                  'success'
-                  )
               }
               })
       });
   </script>
-
-<script>
-  Livewire.on('enviarDireccionIF', tesisId => {
-        Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it! '+tesisId
-            }).then((result) => {
-            if (result.isConfirmed) {
-                Livewire.emitTo('admin.secretaria.tesis-informe-final','enviar',tesisId);
-                Swal.fire(
-                'Deleted!',
-                'Your file has been deleted.',
-                'success'
-                )
-            }
-            })
+  {{--Secretaria aprueba tesis Informe Final--}}
+  <script>
+    Livewire.on('enviarDireccionIF', tesisId => {
+          Swal.fire({
+                  title: 'Esta seguro?',
+                  text: "Esta apunto de enviar al director de escuela!",
+                  icon: 'warning',
+                  showCancelButton: true,
+                  cancelButtonText: 'Cancelar',
+                  confirmButtonColor: '#2ECC71',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'De Acuerdo! '
+              }).then((result) => {
+              if (result.isConfirmed) {
+                  Livewire.emitTo('admin.secretaria.tesis-informe-final','enviar',tesisId);
+              }
+              })
+      });
+  </script>
+  {{--Observacion Denegar tesis--}}
+  <script>
+    Livewire.on('CargarMensajeIF', tesisId => {
+      var mensajito =document.querySelector('textarea[id="mensajito"]').value;
+      console.log(mensajito+ ' -' +tesisId);
+      
+      Livewire.emitTo('admin.secretaria.tesis-informe-final','denegar',tesisId,mensajito);
     });
-</script>
+  </script>
+  <script>
+    Livewire.on('CargarMensaje', tesisId => {
+      var mensajito =document.querySelector('textarea[id="mensajito"]').value;
+      console.log(mensajito+ ' -' +tesisId);
+      
+      Livewire.emitTo('admin.secretaria.tesis-solicitud','denegar',tesisId,mensajito);
+    });
+  </script>
 @stop

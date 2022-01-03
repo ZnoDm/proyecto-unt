@@ -34,13 +34,7 @@
         <div class="col-8 card">
             <div class="card-body">
                 <h3 class="my-3 font-weight-bold text-center"> INFORME FINAL </h3>
-                @if ($practica->practica_status==8 or $practica->practica_status==9)
-                    <div class="alert alert-danger d-flex align-items-center" role="alert">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        <p class="pl-3">  Director de escuela:  <br> {{$observacion}}</p>
-                    </div>
-                @endif
-                <!--VOUCHER-->
+                {{-- Botones de Envio o Denegacion--}}
                 <div class="d-flex text-center justify-content-end">
                     <a type="button"type="submit" class="btn btn-success mx-2" id="confirmar" wire:click="$emit('enviarDireccionIF','{{$practica->id}}')">
                         ENVIAR
@@ -49,6 +43,7 @@
                         DENEGAR
                     </button>
                 </div>
+                {{-- Fin de Botones de Envio o Denegacion--}}
                 <h6 class="font-weight-bold"> Voucher </h6>
                 <div class="row">
                     <div class="col-8">

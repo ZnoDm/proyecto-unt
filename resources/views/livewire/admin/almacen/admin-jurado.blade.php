@@ -5,14 +5,14 @@
 
     <div class="card">
         <div class="card-header">
-            {{-- <select name="filtro" wire:model='filtro' class="form-control">
+            <select name="filtro" wire:model='filtro' class="form-control">
                 <option selected disabled>Buscar por ...</option>
                 <option value="d.docente_nombre">Nombre de Jurado</option>
                 <option value="a.alumno_apellido">Apellido de Alumno</option>
                 <option value="t.tesis_titulo">Titulo de Tesis</option>
                 <option value="dt.docente_nombre">Asesor de Tesis</option>
             </select>
-            <br> --}}
+            <br>
             <input wire:keydown="limpiar_page" wire:model="search" class="form-control w-100"
                 placeholder="Escriba un nombre...">
         </div>

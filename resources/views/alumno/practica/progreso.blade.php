@@ -79,7 +79,7 @@
 
     {{-- Informe Final --}}
     @if($status ==1 or $status==2 or $status == 4 or $status ==5)
-        <h2 class="text-xl font-bold mt-4 text-center">INFORME EN REVISION</h2>
+        <h2 class="text-xl font-bold mt-4 text-center">EN REVISION</h2>
         <P class="font-bold text-center">Puede tomar 7 días hábiles</P>
         <div class="text-center">
             <img src="https://media0.giphy.com/media/3o6fIV0MMLjnuLEazK/giphy.gif?cid=ecf05e47aouav5doxscp2ph7dzp5ucr7w7xd2sardhbyhvgq&rid=giphy.gif&ct=g" class="mx-auto">

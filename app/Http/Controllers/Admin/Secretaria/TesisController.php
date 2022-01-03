@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Alumno;
 use App\Models\Tesis;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TesisController extends Controller
 {
@@ -61,6 +62,7 @@ class TesisController extends Controller
     {
         $tesis = Tesis::find($id);
         $alumno = Alumno::find($tesis->alumno_id);
-        return view('admin.secretaria.tesis.revision',compact('tesis','alumno'));
+        $observacion = DB::table('practica_obervaciones')->where('practica_id',$tesis->id)->latest('id')->first();
+        return view('admin.secretaria.tesis.revision',compact('tesis','alumno','observacion'));
     }
 }

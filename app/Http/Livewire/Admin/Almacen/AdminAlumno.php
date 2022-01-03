@@ -29,7 +29,7 @@ class AdminAlumno extends Component
 
     public function order($sort)
     {
-        if ($this->sotr == $sort) 
+        if ($this->sort == $sort) 
         {
             if ($this->direction == 'desc') 
             {
