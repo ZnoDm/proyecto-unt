@@ -60,7 +60,7 @@
                     <th>COD Docente</th>
                     <th>Docente</th>
                     <th>Detalle</th>
-                    <th>Acciones</th>
+                    <th width="200px" class="text-center">Acciones</th>
                 </tr>
               </thead>
               <tbody>
@@ -79,7 +79,7 @@
                                         INFORME FINAL TESIS
                                     @endif
                                 </td>
-                                <td>
+                                <td class="text-center">
                                     @php
                                         if($solicitud->tesis_status == 2)
                                             $url= $solicitud->tesis_file_tesis;
@@ -90,12 +90,12 @@
                                     @if ($solicitud->tesis_status != 5)
                                         <button  wire:click="$emit('AprobarTesisDireccion','{{$solicitud->id}}','{{$solicitud->tesis_status}}')" onclick="recogerTesisId('{{$solicitud->id}}','{{$solicitud->tesis_status}}')"
                                             class="btn btn-success ml-1" type="button">
-                                        <i class="fas fa-thumbs-up"></i>S
+                                        <i class="fas fa-thumbs-up"></i>
                                         </button>
                                     @else
                                         <button data-toggle="modal" data-target="#exampleModal1" onclick="recogerTesisId('{{$solicitud->id}}','{{$solicitud->tesis_status}}')"
                                             class="btn btn-success ml-1" type="button">
-                                        <i class="fas fa-thumbs-up"></i>IF
+                                        <i class="fas fa-thumbs-up"></i>
                                         </button>
                                     @endif
                                     <button type="button" class="btn btn-danger ml-1" data-toggle="modal" data-target="#exampleModal" onclick="recogerTesisId('{{$solicitud->id}}','{{$solicitud->tesis_status}}')">
@@ -119,7 +119,7 @@
                                         INFORME FINAL PRACTICA
                                     @endif
                                 </td>
-                                <td>
+                                <td class="text-center">
                                     @php
                                         if($solicitud->practica_status == 2)
                                             $url= $solicitud->practica_file_practica_url;
@@ -163,7 +163,7 @@
                                             INFORME FINAL PRACTICA
                                         @endif
                                     </td>
-                                    <td>
+                                    <td class="text-center"> 
                                         @php
                                             if($solicitud->practica_status == 2)
                                                 $url= $solicitud->practica_file_practica_url;
@@ -204,7 +204,7 @@
                                             INFORME FINAL TESIS
                                         @endif
                                     </td>
-                                    <td>
+                                    <td class="text-center">
                                         @php
                                             if($solicitud->tesis_status == 2)
                                                 $url= $solicitud->tesis_file_tesis;
@@ -216,12 +216,12 @@
                                             <button  wire:click="$emit('AprobarTesisDireccion','{{$solicitud->id}}','{{$solicitud->tesis_status}}')"
                                                 onclick="recogerTesisId('{{$solicitud->id}}','{{$solicitud->tesis_status}}')"
                                                 class="btn btn-success ml-1" type="button">
-                                            <i class="fas fa-thumbs-up"></i>S
+                                            <i class="fas fa-thumbs-up"></i>
                                             </button>
                                         @else
                                             <button data-toggle="modal" data-target="#exampleModal1" onclick="recogerTesisId('{{$solicitud->id}}','{{$solicitud->tesis_status}}')"
                                                 class="btn btn-success ml-1" type="button">
-                                            <i class="fas fa-thumbs-up"></i>IF
+                                            <i class="fas fa-thumbs-up"></i>
                                             </button>
                                         @endif
                                         <button type="button" class="btn btn-danger ml-1" data-toggle="modal" data-target="#exampleModal" onclick="recogerTesisId('{{$solicitud->id}}','{{$solicitud->tesis_status}}')">
@@ -242,8 +242,8 @@
       </div> 
     </div>        
     <!-- Modal Jurado-->
-    <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+    <div class="modal fade bd-example-modal-lg" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog  modal-lg">
         <div class="modal-content">
             <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">ASIGNA JURADO PARA APROBAR LA TESIS</h5>           
@@ -253,20 +253,24 @@
             <div class="modal-body">
                 <h5 class="font-weight-bold text-center">JURADO</h5>
                 <div class="row px-5">
-                    <select name="docente_id" id="docente_id" class="form-control w-100" aria-label=".form-select-lg example" onchange="agregar();" >
-                            <option value="" disabled selected>SELECCIONA UN DOCENTE</option>
-                            @foreach($docentes as $docente)
-                                <option value="{{$docente->id}}_{{$docente->docente_nombre}}">{{$docente->docente_nombre}}</option>
-                            @endforeach
-                    </select>
-                    <br> <br>
+                    <div class="pb-4">
+                        <label for="">Docente: </label>
+                        <select name="docente_id" id="docente_id" class="form-control w-100" aria-label=".form-select-lg example" onchange="agregar();" >
+                                <option value="" disabled selected>SELECCIONA UN DOCENTE</option>
+                                @foreach($docentes as $docente)
+                                    <option value="{{$docente->id}}_{{$docente->docente_nombre}}">{{$docente->docente_nombre}}</option>
+                                @endforeach
+                        </select>
+                    </div>
                     <table class="table" id="detalle">
+                        <thead class="thead-dark">
                         <tr>
-                            <th scope="col">CODIGO</th>
-                            <th scope="col">DOCENTE</th>                            
-                            <th scope="col">PUESTO</th>
-                            <th scope="col">ACCION</th>
+                            <th scope="col" width="20px">CODIGO</th>
+                            <th scope="col"width="300px" >DOCENTE</th>                            
+                            <th scope="col"width="200px" >PUESTO</th>
+                            <th scope="col"width="20px" class="text-center">ACCION</th>
                         </tr>
+                        </thead>
                     </table>
                 </div>
                 @error('error') <span class="error">{{ $message }}</span> @enderror

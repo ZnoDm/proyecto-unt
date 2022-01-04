@@ -51,7 +51,7 @@
 @stop
 
 @section('js')
-<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.2/dist/alpine.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.2/dist/alpine.min.js" defer></script>
     <script>
         let modalP = document.querySelector("#modalPreview");
         let spanP = document.querySelector("#closePreview");     
@@ -69,5 +69,25 @@
             document.querySelector('#preview').setAttribute('src', src);
             document.querySelector("#modalPreview").style.display = "block";  
         });      
+    </script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        Livewire.on('DocenteAcepta', (jurado) => {
+            console.log(jurado);
+            Swal.fire({
+                    title: 'Esta seguro?',
+                    text: "Esta apunto de aceptar la tesis!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    cancelButtonText: 'Cancelar',
+                    confirmButtonColor: '#2ECC71',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'De Acuerdo! '
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    Livewire.emitTo('admin.docente.tesis','aceptar',jurado);
+                }
+            })
+        });
     </script>
 @endsection

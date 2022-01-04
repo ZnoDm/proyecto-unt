@@ -287,14 +287,18 @@ return [
         ['header' => 'ESTADISTICAS'],
         [
             'text' => 'Docente/Asesor',
-            'route' => 'admin.home',
+            'route' => 'admin.prueba',
             'icon' => 'fas fa-chart-bar',
+            'can' => 'Ver Administrador Dashboard'
         ],
-        ['header' => 'ROLES'],
+        ['header' => 'ROLES',
+            'can' => 'Ver Director Solicitudes'
+        ],
         [
             'text' => 'Lista de Roles',
-            'route' => 'admin.home',
+            'route' => 'admin.prueba',
             'icon' => 'fas fa-fw fa-users-cog',
+            'can' => 'Ver Director Solicitudes'
         ],
         ['header' => 'ALMACENES DE DATOS'],
         [

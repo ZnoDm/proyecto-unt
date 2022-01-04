@@ -10,6 +10,7 @@ use Livewire\Component;
 class Tesis extends Component
 {
     public $tesis,$docente;
+    protected $listeners = ['aceptar'];
     public function mount(){
         
         $this->docente = Docente::firstWhere(['docente_email'=>auth()->user()->email]);

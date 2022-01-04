@@ -1,30 +1,37 @@
 <div>
     @foreach ($observaciones as $observacion)
 
-    <div class="card">
+    <div class="card bg-secondary">
         
-        <div class="card-header text-muted text-center">
-            2 days ago
+        <div class="card-header text-center">
+            {{$observacion->created_at}}
           </div>
         <div class="card-body">
-            @if (!$observacion->respuesta)
-                <div class="text-right">
-                    ESTADO: ENVIADO
+            <div class="d-flex">
+                <div class="mr-auto">                    
+                    <h5 class="card-title">OBSERVACION:</h5>
+                    <p class="card-text">{{$observacion->observacion}}</p>
+                    
+                    @if ($observacion->respuesta)
+                        <h5 class="card-title">RESPUESTA:</h5>
+                        <p class="card-text">{{$observacion->respuesta}}</p>
+                    @endif
                 </div>
-            @else
+                
                 <div class="text-right">
-                    ESTADO: RESPONDIDO
+                    @if (!$observacion->respuesta)
+                            ESTADO: ENVIADO
+                    @else
+                            ESTADO: RESPONDIDO
+                    @endif                    
                 </div>
-            @endif
-                <h5 class="card-title">Observacion:</h5>
-                <p class="card-text">{{$observacion->observacion}}</p>
-            @if ($observacion->respuesta)
-                <h5 class="card-title">Respuesta:</h5>
-                <p class="card-text">{{$observacion->respuesta}}</p>
-            @endif
+            </div>
+            
+
+           
             @if ($observacion->file_respuesta)
                 <div class="text-right">
-                    <a id="btnPractica" class="btn btn-secondary" wire:click="$emit('CargarModal','{{$observacion->file_respuesta}}','TESIS')">Ver informe Actualizado</a>
+                    <a id="btnPractica" class="btn btn-info" wire:click="$emit('CargarModal','{{$observacion->file_respuesta}}','TESIS')">Ver informe Actualizado</a>
                 </div>
             @endif
         </div>
@@ -33,13 +40,13 @@
     <div class="pt-3">
         <hr class="my-3">
         <form wire:submit.prevent="enviar">
-            <h4 class="text-center">Agregar una nueva Observacion</h4>
-            <textarea wire:model="mensaje" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+            <h5 class="text-center">AGREGA UNA NUEVA OBSERVACION</h5>
+            <textarea wire:model="mensaje" class="form-control" placeholder="Ingrese un comentario aqui." id="floatingTextarea2" style="height: 60px"></textarea>
             @error('mensaje')
                 <p class="text-danger">{{$message}}</p>
             @enderror
             <div class="text-right pt-3">            
-                <button type="submit" class="btn btn-success">Enviar</button>
+                <button type="submit" class="btn btn-success"><i class="fas fa-paper-plane"></i> SEND</button>
             </div>
         </form> 
     </div> 

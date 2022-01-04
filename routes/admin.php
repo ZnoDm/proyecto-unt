@@ -33,3 +33,7 @@ Route::get('/docentes', [AdminController::class, 'docentes'])->middleware('can:V
 Route::get('/jurados', [AdminController::class, 'jurados'])->middleware('can:Ver Administrador Dashboard')->name('admin.jurados'); //Jurados
 Route::get('/empresas', [AdminController::class, 'empresas'])->middleware('can:Ver Administrador Dashboard')->name('admin.empresas'); //Empresas
 Route::get('/vouchers', [AdminController::class, 'vouchers'])->middleware('can:Ver Administrador Dashboard')->name('admin.vouchers'); //Vouchers
+
+Route::get('/prueba', function () {
+     return view('pruebas');
+})->middleware('can:Ver Administrador Dashboard')->name('admin.prueba');

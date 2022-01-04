@@ -180,8 +180,9 @@
                         temporal[indice] = docente[0];		
                         fila    =   '<tr id="fila'+indice+'"><td>'
                                     +'COD-'+docente[0]+'</td><td>'+
-                                    '<select name="puesto_'+indice+'" id="puesto_'+indice+'" onchange="puesto('+indice+');"><option value="0" disabled selected>Selecciona</option><option value="PRESIDENTE">PRESIDENTE</option><option value="SECRETARIO">SECRETARIO</option><option value="VOCAL">VOCAL</option></select></td><td>'+
-                                    docente[1]+'</td><td><a href="#" onclick="quitar('+indice+')" style="color:red;"><i class="far fa-trash-alt"></i></a></td></tr>';
+                                    docente[1]+
+                                    '</td><td><select class="form-control w-100" name="puesto_'+indice+'" id="puesto_'+indice+'" onchange="puesto('+indice+');"><option value="0" disabled selected>Selecciona</option><option value="PRESIDENTE">PRESIDENTE</option><option value="SECRETARIO">SECRETARIO</option><option value="VOCAL">VOCAL</option></select>'+
+                                    '</td><td class="text-center"><a href="#" onclick="quitar('+indice+')" style="color:red;"><i class="far fa-trash-alt"></i></a></td></tr>';
                         $('#detalle').append(fila);
                         indice++;
                         console.log(temporal);
@@ -221,7 +222,6 @@
             else
                 {
                 puestos_temporal[indice] = elemento;
-                alert("Puesto asignado")
                 }
             console.log('PUESTOS: '+ puestos_temporal);
             
