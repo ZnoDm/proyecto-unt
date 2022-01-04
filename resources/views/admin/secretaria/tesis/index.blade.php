@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Tesis Pendientes')
+@section('title', 'Secretaria | Tesis Pendientes')
 
 @section('content_header')
     <h3 class="d-flex">{{strtoupper('tesis Pendientes de Aprobacion')}}</h3>

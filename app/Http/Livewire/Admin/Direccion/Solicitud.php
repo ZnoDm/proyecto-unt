@@ -2,10 +2,13 @@
 
 namespace App\Http\Livewire\Admin\Direccion;
 
+use App\Mail\PracticaSolicitudAprobada;
+use App\Models\Alumno;
 use App\Models\Docente;
 use App\Models\Practica;
 use App\Models\Tesis;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -111,6 +114,12 @@ class Solicitud extends Component
             $practica->update(['practica_status' => 6]);
         else
             $practica->update(['practica_status' => 3]);
+        
+        $mensajito  = "Su practica fue aceptada con éxito, de acuerdo a los lineamientos de la Escuela.";
+        $alumno = Alumno::firstWhere('id',$practica->alumno_id);
+        $mail = new PracticaSolicitudAprobada($alumno,$practica,$mensajito);
+        Mail::to($alumno->alumno_email)->queue($mail);
+        
         session()->flash('info','Practica Aprobada correctamente');
         return redirect()->route('admin.direccion.index');
     }

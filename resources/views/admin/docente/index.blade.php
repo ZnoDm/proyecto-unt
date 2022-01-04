@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Docentes')
+@section('title', 'Docente')
 
 @section('content_header')
     <h1>Bandeja de Entrada</h1>

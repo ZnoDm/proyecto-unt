@@ -7,24 +7,18 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class DeniedPractica extends Mailable
+class TesisAvisaDocente extends Mailable
 {
     use Queueable, SerializesModels;
-
-    
-    public $mensajito = 'mensajito';
-    public $subject = "PRACTICA DENEGADA";
-    public $alumno1 = "Infor";
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($alumno1,$mensajito)
+    public function __construct()
     {
-        $this->alumno1 = $alumno1;
-        $this->mensajito  = $mensajito;
+        //
     }
 
     /**
@@ -34,6 +28,6 @@ class DeniedPractica extends Mailable
      */
     public function build()
     {
-        return $this->view('mail.denied-practica');
+        return $this->markdown('mails.tesis-avisa-docente');
     }
 }

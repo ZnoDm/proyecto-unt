@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class AvisaDocente extends Mailable
+class TesisSolicitudAprobada extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -28,6 +28,6 @@ class AvisaDocente extends Mailable
      */
     public function build()
     {
-        return $this->view('view.name');
+        return $this->markdown('mails.tesis-solicitud-aprobada');
     }
 }

@@ -1,5 +1,5 @@
 @extends('adminlte::page')
-@section('title', 'tesiss Pendientes')
+@section('title', 'Secretaria | Tesis Pendientes')
 @section('content_header')
         
     <hr class="mt-3">

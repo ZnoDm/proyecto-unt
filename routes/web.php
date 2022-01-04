@@ -1,5 +1,6 @@
 <?php
 
+use App\Mail\PracticaSolicitudAprobada;
 use Illuminate\Support\Facades\Route;
 
 /*

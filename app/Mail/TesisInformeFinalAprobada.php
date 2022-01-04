@@ -7,22 +7,18 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class JuradoTesis extends Mailable
+class TesisInformeFinalAprobada extends Mailable
 {
     use Queueable, SerializesModels;
-    public $subject = "TESIS APROBADA";
-    public $alumno,$practica,$mensaje,$jurados= "Info";
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($alumno,$practica,$mensaje,$jurados)
+    public function __construct()
     {
-        $this->alumno =$alumno;
-        $this->practica =$practica;
-        $this->mensaje =$mensaje;
-        $this->jurados =$jurados;
+        //
     }
 
     /**
@@ -32,6 +28,6 @@ class JuradoTesis extends Mailable
      */
     public function build()
     {
-        return $this->view('mail.aproved-tesis');
+        return $this->markdown('mails.tesis-informe-final-aprobada');
     }
 }

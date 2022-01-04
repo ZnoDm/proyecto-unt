@@ -1,5 +1,5 @@
 @extends('adminlte::page')
-@section('title', 'Practicas Pendientes')
+@section('title', 'Secretaria | Practicas Pendientes')
 @section('content_header')
     <h3 class="d-flex">{{strtoupper('Revision de practica')}}</h3>
 @stop
