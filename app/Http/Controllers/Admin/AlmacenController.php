@@ -16,34 +16,12 @@ use App\Models\Empresa;
 use App\Models\Voucher;
 use Illuminate\Support\Facades\DB;
 
-class AdminController extends Controller
+class AlmacenController extends Controller
 {
     //ESTADOS DE LA PRACTICA 1=EN REVISION, 2=APROBADA, 3= RECHAZADA, 4=FINALIZADA.
     public function alumnos ()
     {
         return view('admin.almacen.alumnos');
-    }
-     
-    public function voucher(){
-        $vouchers=Voucher::all();
-        return view('admin.voucher',compact('vouchers'));
-    }
-    
-    public function empresa(){
-        $empresas=Empresa::all();
-        return view('admin.empresas',compact('empresas'));
-    }
-    public function grafico1(){
-        $consulta=DB::table('alumno_practica')
-        ->join('docentes', 'alumno_practica.docente_id', '=', 'docentes.id')
-        ->select(DB::raw('count(*) as cantidad, docentes.nombre'))
-        ->groupBy('docentes.nombre')
-        ->get();
-        $puntos = [];
-        foreach ($consulta as $c) {
-            $puntos[] = ['name' => $c->nombre, 'y' => floatval($c->cantidad)];
-        }
-        return view('admin.estadistica.docenteasesor', ["date" => json_encode($puntos)]);
     }
     public function docentes()
     {
@@ -63,5 +41,19 @@ class AdminController extends Controller
     public function vouchers()
     {
         return view('admin.almacen.vouchers');
+    }
+
+    
+    public function grafico1(){
+        $consulta=DB::table('alumno_practica')
+        ->join('docentes', 'alumno_practica.docente_id', '=', 'docentes.id')
+        ->select(DB::raw('count(*) as cantidad, docentes.nombre'))
+        ->groupBy('docentes.nombre')
+        ->get();
+        $puntos = [];
+        foreach ($consulta as $c) {
+            $puntos[] = ['name' => $c->nombre, 'y' => floatval($c->cantidad)];
+        }
+        return view('admin.estadistica.docenteasesor', ["date" => json_encode($puntos)]);
     }
 }

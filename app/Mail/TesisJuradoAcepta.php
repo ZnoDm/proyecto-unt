@@ -7,22 +7,20 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class TesisAlumnoRespondeJurado extends Mailable
+class TesisJuradoAcepta extends Mailable
 {
     use Queueable, SerializesModels;
-
-    public $subject = "RESPUESTA ALUMNO - TESIS";
-    public $jurado,$tesis,$mensaje= "Info";
+    public $subject = "JURADO APRUEBA - TESIS";
+    public $jurado,$tesis;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($jurado,$tesis,$mensaje)
+    public function __construct($jurado,$tesis)
     {
         $this->jurado = $jurado;
         $this->tesis = $tesis;
-        $this->mensaje = $mensaje;
     }
 
 
@@ -33,6 +31,6 @@ class TesisAlumnoRespondeJurado extends Mailable
      */
     public function build()
     {
-        return $this->markdown('mails.tesis-alumno-responde-jurado');
+        return $this->markdown('mails.tesis-jurado-acepta');
     }
 }

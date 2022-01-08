@@ -80,7 +80,7 @@
                                     <i class="fas fa-check"></i>     
                                     @break
                                 @default
-                                    2
+                                    3
                             @endswitch
                         </span>
                     </div>
@@ -125,19 +125,15 @@
         @if($status ==6)
             @if ($suma==3)
                 <h2 class="text-xl font-bold mt-4 text-center">EL JURADO ACEPTO SU INFORME</h2>
+                <p class="font-bold text-center">Good Job</p>
+                <div class="text-center">
+                    <img src="https://media4.giphy.com/media/5hgYDDh5oqbmE4OKJ3/giphy.gif?cid=ecf05e47g6fn83373oqgmtj54sks5s4nknq8xe0wu6whjnsi&rid=giphy.gif&ct=g" class="mx-auto">
+                </div>
             @else            
                 @livewire('alumno.jurados',['tesis' => $tesi]) 
             @endif           
         @else
-            @if($status ==7)
-                <h2 class="text-xl font-bold mt-4 text-center">PROCESO FINALIZADO</h2>
-                <P class="font-bold text-center">Good Job</P>
-                <div class="text-center">
-                    <img src="https://media4.giphy.com/media/5hgYDDh5oqbmE4OKJ3/giphy.gif?cid=ecf05e47g6fn83373oqgmtj54sks5s4nknq8xe0wu6whjnsi&rid=giphy.gif&ct=g" class="mx-auto">
-                </div>
-            @else
-                <h2 class="text-xl font-bold mt-4 text-center">NO ESTA EN EL FLUJO, FALTAN ENVIAR DOCUMENTOS</h2>
-            @endif
+            <h2 class="text-xl font-bold mt-4 text-center">NO ESTA EN EL FLUJO, FALTAN ENVIAR DOCUMENTOS</h2>
         @endif
     @endif
     

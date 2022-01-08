@@ -2,8 +2,11 @@
 
 namespace App\Http\Livewire\Alumno;
 
+use App\Mail\TesisAlumnoRespondeJurado;
 use App\Models\Jurado;
+use App\Models\Tesis;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -29,6 +32,11 @@ class JuradoObservacion extends Component
             'file_respuesta' => $url,
             'jo_status'=>2
         ]);
+
+        $tesis = Tesis::find($this->jurado->tesis_id);
+        $mail = new TesisAlumnoRespondeJurado($this->jurado,$tesis,$this->mensaje_respuesta);
+        Mail::to($tesis->docente->docente_email)->queue($mail);
+        
         session()->flash('info','Se envio su respuesta');
         return redirect()->route('tramite.tesis.index');
     }

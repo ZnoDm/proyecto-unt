@@ -10,7 +10,7 @@ use Illuminate\Queue\SerializesModels;
 class PracticaSolicitudAprobada extends Mailable
 {
     use Queueable, SerializesModels;
-    public $subject = "PRACTICA APROBADA - ESCUELA DE INGENIERIA DE SISTEMAS - UNT";
+    public $subject = "SOLICITUD PRACTICA APROBADA - ESCUELA DE INGENIERIA DE SISTEMAS - UNT";
     public $alumno,$practica,$mensaje= "Info";
     /**
      * Create a new message instance.
@@ -33,4 +33,5 @@ class PracticaSolicitudAprobada extends Mailable
     {
         return $this->markdown('mails.practica-solicitud-aprobada');
     }
+    
 }

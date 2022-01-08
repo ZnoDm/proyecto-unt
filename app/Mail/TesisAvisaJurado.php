@@ -10,15 +10,20 @@ use Illuminate\Queue\SerializesModels;
 class TesisAvisaJurado extends Mailable
 {
     use Queueable, SerializesModels;
-
+    public $subject = "JURADO DE TESIS - ESCUELA DE INGENIERIA DE SISTEMAS - UNT";
+    public $alumno,$tesis,$docente,$puesto="nada",$mensaje= "Info";
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($alumno,$tesis,$docente,$puesto,$mensaje)
     {
-        //
+        $this->alumno =$alumno;
+        $this->tesis =$tesis;
+        $this->puesto =$puesto;
+        $this->mensaje =$mensaje;
+        $this->docente =$docente;
     }
 
     /**

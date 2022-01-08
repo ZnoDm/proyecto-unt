@@ -10,15 +10,19 @@ use Illuminate\Queue\SerializesModels;
 class PracticaDirectorDeniega extends Mailable
 {
     use Queueable, SerializesModels;
-
+    public $subject = "PRACTICA DENEGADA - ESCUELA DE INGENIERIA DE SISTEMAS - UNT";
+    public $alumno,$practica,$tipo="tipo",$mensaje= "Info";
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($alumno,$practica,$mensaje,$tipo)
     {
-        //
+        $this->alumno =$alumno;
+        $this->practica =$practica;
+        $this->mensaje =$mensaje;
+        $this->tipo =$tipo;
     }
 
     /**

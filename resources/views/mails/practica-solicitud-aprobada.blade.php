@@ -19,3 +19,5 @@ IR AL SISTEMA
 Gracias,<br>
 {{ config('app.name') }}
 @endcomponent
+
+

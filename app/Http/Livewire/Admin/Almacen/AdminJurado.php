@@ -28,7 +28,7 @@ class AdminJurado extends Component
                     ->join('alumnos as a', 't.alumno_id', '=', 'a.id')
                     ->where($this->filtro, 'like', '%'.$this->search.'%')
                     ->orderBy($this->sort, $this->direction)
-                    ->paginate(8);
+                    ->paginate(5);
 
         return view('livewire.admin.almacen.admin-jurado', compact('jurados'));
     }

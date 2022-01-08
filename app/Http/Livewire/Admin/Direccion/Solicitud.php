@@ -2,7 +2,15 @@
 
 namespace App\Http\Livewire\Admin\Direccion;
 
+use App\Mail\PracticaAvisaDocente;
+use App\Mail\PracticaDirectorDeniega;
+use App\Mail\PracticaInformeFinalAprobada;
 use App\Mail\PracticaSolicitudAprobada;
+use App\Mail\TesisAvisaDocente;
+use App\Mail\TesisAvisaJurado;
+use App\Mail\TesisDirectorDeniega;
+use App\Mail\TesisInformeFinalAprobada;
+use App\Mail\TesisSolicitudAprobada;
 use App\Models\Alumno;
 use App\Models\Docente;
 use App\Models\Practica;
@@ -110,15 +118,29 @@ class Solicitud extends Component
     public function aprobarPractica($practicaId,$estatus){
         //Informe final o Solicitud
         $practica = Practica::find($practicaId);
-        if($estatus ==5)
+        if($estatus ==5){
             $practica->update(['practica_status' => 6]);
-        else
+
+            $mensajito  = "Felicitaciones ha culminado el proceso de practicas, su informe final fue aceptado con exito de acuerdo a los lineamientos de la Escuela.";
+
+            $alumno = Alumno::firstWhere('id',$practica->alumno_id);
+            $mail = new PracticaInformeFinalAprobada($alumno,$mensajito);
+            Mail::to($alumno->alumno_email)->queue($mail);
+        }
+        else{
             $practica->update(['practica_status' => 3]);
+
+            $mensajito  = "Su practica fue aceptada con éxito, de acuerdo a los lineamientos de la Escuela.";
+            $alumno = Alumno::firstWhere('id',$practica->alumno_id);
+            $mail = new PracticaSolicitudAprobada($alumno,$practica,$mensajito);
+            Mail::to($alumno->alumno_email)->queue($mail);
+
+            $mensajito2  = "Ha sido asignado como asesor de practica del alumno ".$alumno->alumno_apellido.' '.$alumno->alumno_nombre;
+            $docente = Docente::firstWhere('id',$practica->docente_id);
+            $mail2 = new PracticaAvisaDocente($alumno,$practica,$docente,$mensajito2);
+            Mail::to($docente->docente_email)->queue($mail2);
+        }
         
-        $mensajito  = "Su practica fue aceptada con éxito, de acuerdo a los lineamientos de la Escuela.";
-        $alumno = Alumno::firstWhere('id',$practica->alumno_id);
-        $mail = new PracticaSolicitudAprobada($alumno,$practica,$mensajito);
-        Mail::to($alumno->alumno_email)->queue($mail);
         
         session()->flash('info','Practica Aprobada correctamente');
         return redirect()->route('admin.direccion.index');
@@ -126,26 +148,33 @@ class Solicitud extends Component
     
     public function denegarPractica($practicaId,$mensaje,$estatus){
         //Informe final o Solicitud
+        $tipo="algo";
         $practica = Practica::find($practicaId);
         if($estatus ==5){
             $practica->update(['practica_status' => 11]);
             DB::table('practica_observaciones')->insert([
-            'po_detalle'=>$mensaje,
-            'po_status'=>'DIRECTOR A ALUMNO',
-            'practica_id'=>$practica->id,
-            'administrativo_id'=>2,
-        ]);
+                'po_detalle'=>$mensaje,
+                'po_status'=>'DIRECTOR A ALUMNO',
+                'practica_id'=>$practica->id,
+                'administrativo_id'=>2,
+            ]);
+            $tipo="Informe Final";
         }
         else{            
             $practica->update(['practica_status' => 9]);
             DB::table('practica_observaciones')->insert([
-            'po_detalle'=>$mensaje,
-            'po_status'=>'DIRECTOR A ALUMNO',
-            'practica_id'=>$practica->id,
-            'administrativo_id'=>2,]);
+                'po_detalle'=>$mensaje,
+                'po_status'=>'DIRECTOR A ALUMNO',
+                'practica_id'=>$practica->id,
+                'administrativo_id'=>2,
+            ]);
+            $tipo="Plan de Practica";
         }
 
-        
+        $alumno = Alumno::firstWhere('id',$practica->alumno_id);
+        $mail = new PracticaDirectorDeniega($alumno,$practica,$mensaje,$tipo);
+        Mail::to($alumno->alumno_email)->queue($mail);
+
         session()->flash('info','Se ha denegado la practica correctamente, se mandaron las observaciones al alumno');
         return redirect()->route('admin.direccion.index');
     }
@@ -156,12 +185,26 @@ class Solicitud extends Component
         if($estatus==2){        
             $tesis = Tesis::find($tesisId);
             $tesis->update(['tesis_status' => 3]);
+            //CORREO AL ALUMNO CONFIRMANDO
+            $mensajito  = "Su solicitud de tesis fue aceptada con éxito, de acuerdo a los lineamientos de la Escuela.";
+            $alumno = Alumno::firstWhere('id',$tesis->alumno_id);
+            $mail = new TesisSolicitudAprobada($alumno,$tesis,$mensajito);
+            Mail::to($alumno->alumno_email)->queue($mail);
+
+            //CORREO AVISA DOCENTE ASESOR
+            $mensajito2  = "Ha sido asignado como asesor de tesis del alumno ".$alumno->alumno_apellido.' '.$alumno->alumno_nombre;
+            $docente = Docente::firstWhere('id',$tesis->docente_id);
+            $mail2 = new TesisAvisaDocente($alumno,$tesis,$docente,$mensajito2);
+            Mail::to($docente->docente_email)->queue($mail2);
+
             session()->flash('info','Tesis Aprobado correctamente');
+            
+            return redirect()->route('admin.direccion.index');
         }else{        
-        //Informe final
-        if(empty($temporal[2]))                
-            session()->flash('info','Error debe agregar 3 jurados');
-        else{
+            //Informe final
+            if(empty($temporal[2]))                
+                session()->flash('info','Error debe agregar 3 jurados');
+            else{
                 $tesis = Tesis::find($tesisId);
                 $tesis->update(['tesis_status' => 6]);
                 DB::table('jurados')->insert([
@@ -182,33 +225,54 @@ class Solicitud extends Component
                     'docente_id'=>$temporal[2],
                     'status'=>1
                 ]);
-                session()->flash('info','Tesis IF Aprobado correctamente');
-        }
+
+                $mensajito  = "Su Informe Final fue aceptada con éxito, de acuerdo a los lineamientos de la Escuela.   De acuerdo con esto, se le ha asignado sus jurados de tesis.";
+                $alumno = Alumno::firstWhere('id',$tesis->alumno_id);
+                $mail = new TesisInformeFinalAprobada($alumno,$tesis,$mensajito);
+                Mail::to($alumno->alumno_email)->queue($mail);
+
+                for ($i=0; $i <3 ; $i++) {
+                    $docente = Docente::firstWhere('id',$temporal[$i]); 
+                    $mensajito2  = "Usted ha sido asignado como jurado tesis";
+                    $alumno = Alumno::firstWhere('id',$tesis->alumno_id);
+                    $mail2 = new TesisAvisaJurado($alumno,$tesis,$docente,$puestos_temporal[$i],$mensajito2);
+                    Mail::to($alumno->alumno_email)->queue($mail2);    
+                }
+               
+                session()->flash('info','Tesis Informe Final Aprobado correctamente');                
+                return redirect()->route('admin.direccion.index');
+            }
         }
         
-        return redirect()->route('admin.direccion.index');
     }   
     public function denegarTesis($tesisId,$mensaje,$estatus){
         //Informe final o Solicitud
+        $tipo="algo";
         $tesis = Tesis::find($tesisId);
         if($estatus ==5){
             $tesis->update(['tesis_status' => 11]);
             DB::table('tesis_observaciones')->insert([
-            'to_detalle'=>$mensaje,
-            'to_status'=>'DIRECTOR A ALUMNO',
-            'tesis_id'=>$tesis->id,
-            'administrativo_id'=>2,
-        ]);
+                'to_detalle'=>$mensaje,
+                'to_status'=>'DIRECTOR A ALUMNO',
+                'tesis_id'=>$tesis->id,
+                'administrativo_id'=>2
+            ]);
+        
+        $tipo="Informe Final de Tesis";
         }
         else{            
             $tesis->update(['tesis_status' => 9]);
             DB::table('tesis_observaciones')->insert([
-            'to_detalle'=>$mensaje,
-            'to_status'=>'DIRECTOR A ALUMNO',
-            'tesis_id'=>$tesis->id,
-            'administrativo_id'=>2,]);
+                'to_detalle'=>$mensaje,
+                'to_status'=>'DIRECTOR A ALUMNO',
+                'tesis_id'=>$tesis->id,
+                'administrativo_id'=>2
+            ]);
+            $tipo="solicitud de Tesis";
         }
-
+        $alumno = Alumno::firstWhere('id',$tesis->alumno_id);
+        $mail = new TesisDirectorDeniega($alumno,$tesis,$mensaje,$tipo);
+        Mail::to($alumno->alumno_email)->queue($mail);
         
         session()->flash('info','Se ha denegado la tesis correctamente, se mandaron las observaciones al alumno');
         return redirect()->route('admin.direccion.index');

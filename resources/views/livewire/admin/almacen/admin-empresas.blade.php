@@ -15,7 +15,7 @@
                     <tr>
                         <th scope="col"
                             role="button" wire:click="order('empresa_ruc')">
-                            RUC
+                            Ruc
                             @if ($sort == 'empresa_ruc')
                                 @if ($direction == 'asc')
                                     <i class="fas fa-sort-numeric-up-alt float-right mt-1"></i>
@@ -28,7 +28,7 @@
                         </th>
                         <th scope="col"
                             role="button" wire:click="order('empresa_razonsocial')">
-                            RAZÓN SOCIAL
+                            Razon Social
                             @if ($sort == 'empresa_razonsocial')
                                 @if ($direction == 'asc')
                                     <i class="fas fa-sort-alpha-up-alt float-right mt-1"></i>
@@ -41,7 +41,7 @@
                         </th>
                         <th scope="col"
                             role="button" wire:click="order('empresa_representante')">
-                            REPRESENTANTE
+                            Representante
                             @if ($sort == 'empresa_representante')
                                 @if ($direction == 'asc')
                                     <i class="fas fa-sort-alpha-up-alt float-right mt-1"></i>
@@ -54,7 +54,7 @@
                         </th>
                         <th scope="col"
                             role="button" wire:click="order('empresa_supervisor')">
-                            SUPERVISOR
+                            Supervisor
                             @if ($sort == 'empresa_supervisor')
                                 @if ($direction == 'asc')
                                     <i class="fas fa-sort-alpha-up-alt float-right mt-1"></i>
@@ -67,7 +67,7 @@
                         </th>
                         <th scope="col"
                             role="button" wire:click="order('empresa_telefono')">
-                            TELÉFONO
+                            Telefono
                             @if ($sort == 'empresa_telefono')
                                 @if ($direction == 'asc')
                                     <i class="fas fa-sort-numeric-up-alt float-right mt-1"></i>

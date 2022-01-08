@@ -23,7 +23,7 @@
                         <tr>
                             <th scope="col"
                             role="button" wire:click="order('jurado')">
-                            JURADO
+                            Jurado
                             @if ($sort == 'jurado')
                                 @if ($direction == 'asc')
                                     <i class="fas fa-sort-alpha-up-alt float-right mt-1"></i>
@@ -36,7 +36,7 @@
                             </th>
                             <th scope="col"
                             role="button" wire:click="order('alumno_apellido')">
-                            ALUMNO
+                            Alumno
                             @if ($sort == 'alumno_apellido')
                                 @if ($direction == 'asc')
                                     <i class="fas fa-sort-alpha-up-alt float-right mt-1"></i>
@@ -49,7 +49,7 @@
                             </th>
                             <th scope="col"
                             role="button" wire:click="order('tesis_titulo')">
-                            TITULO DE TESIS
+                            Titulo Tesis
                             @if ($sort == 'tesis_titulo')
                                 @if ($direction == 'asc')
                                     <i class="fas fa-sort-alpha-up-alt float-right mt-1"></i>
@@ -62,7 +62,7 @@
                             </th>
                             <th scope="col"
                             role="button" wire:click="order('docente_nombre')">
-                            ASESOR DE TESIS
+                            Asesor
                             @if ($sort == 'docente_nombre')
                                 @if ($direction == 'asc')
                                     <i class="fas fa-sort-alpha-up-alt float-right mt-1"></i>
@@ -75,7 +75,7 @@
                             </th>
                             <th scope="col"
                             role="button" wire:click="order('tesis_fechainicio')">
-                            INICIO DE TESIS
+                            Fecha Inicio
                             @if ($sort == 'tesis_fechainicio')
                                 @if ($direction == 'asc')
                                     <i class="fas fa-sort-numeric-up-alt float-right mt-1"></i>
@@ -88,7 +88,7 @@
                             </th>
                             <th scope="col"
                             role="button" wire:click="order('tesis_fechafin')">
-                            FIN DE TESIS
+                            Fecha Fin
                             @if ($sort == 'tesis_fechafin')
                                 @if ($direction == 'asc')
                                     <i class="fas fa-sort-numeric-up-alt float-right mt-1"></i>

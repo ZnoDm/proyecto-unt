@@ -141,7 +141,8 @@
                             </tr>
                         @empty
                         @endforelse
-                        @empty($tesis and $practicas)
+
+                        @if($tesis->count()==0 and $practicas->count()==0)
                             <tr>
                                 <td class="text-center" colspan="7">No tiene tesis ni practicas pendientes</td>
                             </tr>
@@ -277,7 +278,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
-            <button wire:click="$emit('AprobarTesisDireccionIF')" class="btn btn-success" type="button"
+                <button wire:click="$emit('AprobarTesisDireccionIF')" class="btn btn-success" type="button"
             data-bs-toggle="modal" data-bs-target="#exampleModal1" id="submitIF" disabled>Aprobar</button>
             </div>
         </div>

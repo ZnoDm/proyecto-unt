@@ -17,7 +17,7 @@ class AdminDocente extends Component
     public function render()
     {
         $docentes = Docente::where('docente_nombre', 'LIKE', '%' . $this->search . '%')
-                            ->orderBy($this->sort, $this->direction)->paginate(8);
+                            ->orderBy($this->sort, $this->direction)->paginate(5);
         return view('livewire.admin.almacen.admin-docente', compact('docentes'));
     }
     

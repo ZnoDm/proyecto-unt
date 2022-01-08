@@ -4,7 +4,7 @@
         
         @forelse($tesis as $tes)
             <article class="card shadow-sm p-4 mb-3 bg-body rounded" x-data="{open:false}">
-                <h5 class="font-weight-bold">JURADO - {{$tes->puesto}} - DE:</h5>
+                <h5>JURADO - {{$tes->puesto}} - DE:</h5>
                 <div class="d-flex">
                     <div class="mr-auto">
                         <span>TITULO : {{$tes->tesis_titulo}}</span> <br>

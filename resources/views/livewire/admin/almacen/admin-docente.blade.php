@@ -15,7 +15,7 @@
                     <tr>
                         <th scope="col"
                             role="button" wire:click="order('id')">
-                            ID
+                            Id
                             @if ($sort == 'id')
                                 @if ($direction == 'asc')
                                     <i class="fas fa-sort-numeric-up-alt float-right mt-1"></i>
@@ -28,7 +28,7 @@
                         </th>
                         <th scope="col"
                             role="button" wire:click="order('docente_nombre')">
-                            NOMBRES
+                            Apellidos y Nombres
                             @if ($sort == 'docente_nombre')
                                 @if ($direction == 'asc')
                                     <i class="fas fa-sort-alpha-up-alt float-right mt-1"></i>
@@ -41,7 +41,7 @@
                         </th>
                         <th scope="col"
                             role="button" wire:click="order('docente_status')" class="text-center">
-                            ESTATUS
+                            Asignado
                             @if ($sort == 'docente_status')
                                 @if ($direction == 'asc')
                                     <i class="fas fa-sort-alpha-up-alt float-right mt-1"></i>
@@ -52,7 +52,7 @@
                                 <i class="fas fa-sort float-right mt-1"></i>
                             @endif
                         </th>
-                        <th colspan="2" class="text-center">ACCIONES</th>
+                        <th class="text-center">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -75,11 +75,8 @@
                                     NO ASIGNADO
                             @endswitch
                         </td>
-                        <td width="10px">
-                            <a href="{{-- {{route('admin.docente.show',$docente)}} --}}" class="btn btn-success">Ver</a>
-                        </td>
-                        <td width="10px">
-                            <a href="{{-- {{route('admin.docente.asignar',$docente)}} --}}" class="btn btn-info">Asignar</a>
+                        <td width="10px" class="text-center">
+                            <a href="" class="btn btn-secondary btn-sm"><i class="fas fa-cog"></i></a>
                         </td>
                     </tr>
                     @endforeach

@@ -296,7 +296,8 @@ return [
         ],
         [
             'text' => 'Lista de Roles',
-            'route' => 'admin.prueba',
+            'route' => 'admin.direccion.roles.index',
+            'active'      => ['admin/roles*'],
             'icon' => 'fas fa-fw fa-users-cog',
             'can' => 'Ver Director Solicitudes'
         ],

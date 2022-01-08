@@ -18,7 +18,7 @@ class AdminVouchers extends Component
     {
         $vouchers = Voucher::where('voucher_nro', 'like', $this->search.'%')
                             ->orderBy($this->sort, $this->direction)
-                            ->paginate(8);
+                            ->paginate(5);
 
         return view('livewire.admin.almacen.admin-vouchers', compact('vouchers'));
     }

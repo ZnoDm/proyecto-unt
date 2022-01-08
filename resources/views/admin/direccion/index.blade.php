@@ -4,12 +4,12 @@
 
 @section('content')
     @if (session('info'))
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            {{session('info')}}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Éxito!</strong> {{session('info')}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
+        </button>
+    </div>
     @endif
     @livewire('admin.direccion.solicitud')
 @stop
@@ -229,6 +229,7 @@
         Livewire.on('AprobarTesisDireccionIF', () => {
             if(puestos_temporal.length >=3){                
                 console.log(tesisId+' - estado:'+tesisEstatus  + 'TESIS - Array Docentes ID:'+ temporal);
+                $('#exampleModal1').modal('hide');
                 Livewire.emitTo('admin.direccion.solicitud','aprobarTesis',tesisId,tesisEstatus ,temporal,puestos_temporal);     
             } else
             {

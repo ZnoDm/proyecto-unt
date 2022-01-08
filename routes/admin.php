@@ -1,14 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\RoleController;
-use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AlmacenController;
+use App\Http\Controllers\Admin\Direccion\RolController;
 use App\Http\Controllers\Admin\Direccion\Solicitud as DireccionSolicitud;
 use App\Http\Controllers\Admin\Docente\DocenteController as DocenteJurado;
 
 use App\Http\Controllers\Admin\Secretaria\PracticaController;
 use App\Http\Controllers\Admin\Secretaria\TesisController;
-use App\Http\Livewire\Admin\Almacen\AlmacenDocente;
 use App\Models\Docente;
 
 Route::get('/', function () {
@@ -24,15 +23,17 @@ Route::get('/secretaria/tesis/{id}/review', [TesisController::class,'revision'])
 /* Direccion */
 Route::get('/direccion', [DireccionSolicitud::class,'index'])->middleware('can:Ver Director Solicitudes')->name('admin.direccion.index');
 
+Route::resource('roles', RolController::class)->names('admin.direccion.roles');
+
 /* Docente Jurado */
 Route::get('/docente', [DocenteJurado::class,'index'])->middleware('can:Ver Docente Solicitudes')->name('admin.docente.index');
 
 /* Almacen de datos */
-Route::get('/alumnos', [AdminController::class,'alumnos'])->middleware('can:Ver Administrador Dashboard')->name('admin.alumnos'); //Alumnos
-Route::get('/docentes', [AdminController::class, 'docentes'])->middleware('can:Ver Administrador Dashboard')->name('admin.docentes'); //Docentes
-Route::get('/jurados', [AdminController::class, 'jurados'])->middleware('can:Ver Administrador Dashboard')->name('admin.jurados'); //Jurados
-Route::get('/empresas', [AdminController::class, 'empresas'])->middleware('can:Ver Administrador Dashboard')->name('admin.empresas'); //Empresas
-Route::get('/vouchers', [AdminController::class, 'vouchers'])->middleware('can:Ver Administrador Dashboard')->name('admin.vouchers'); //Vouchers
+Route::get('/alumnos', [AlmacenController::class,'alumnos'])->middleware('can:Ver Administrador Dashboard')->name('admin.alumnos'); //Alumnos
+Route::get('/docentes', [AlmacenController::class, 'docentes'])->middleware('can:Ver Administrador Dashboard')->name('admin.docentes'); //Docentes
+Route::get('/jurados', [AlmacenController::class, 'jurados'])->middleware('can:Ver Administrador Dashboard')->name('admin.jurados'); //Jurados
+Route::get('/empresas', [AlmacenController::class, 'empresas'])->middleware('can:Ver Administrador Dashboard')->name('admin.empresas'); //Empresas
+Route::get('/vouchers', [AlmacenController::class, 'vouchers'])->middleware('can:Ver Administrador Dashboard')->name('admin.vouchers'); //Vouchers
 
 Route::get('/prueba', function () {
      return view('pruebas');

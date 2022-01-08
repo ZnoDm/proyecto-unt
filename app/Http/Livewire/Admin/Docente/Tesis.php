@@ -2,9 +2,12 @@
 
 namespace App\Http\Livewire\Admin\Docente;
 
+use App\Mail\TesisJuradoAcepta;
 use App\Models\Docente;
 use App\Models\Jurado;
+use App\Models\Tesis as ModelsTesis;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 
 class Tesis extends Component
@@ -23,6 +26,10 @@ class Tesis extends Component
     }
     public function aceptar($jurado){
         Jurado::where('id',$jurado)->update(['status'=>2]);
+        $jurado = Jurado::find($jurado);
+        $tesis = ModelsTesis::find($jurado->tesis_id);
+        $mail = new TesisJuradoAcepta($jurado,$tesis);
+        Mail::to($tesis->alumno->alumno_email)->queue($mail);
     }
     public function render()
     {

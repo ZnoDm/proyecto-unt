@@ -19,7 +19,7 @@ class AdminEmpresas extends Component
         $empresas = Empresa::where('empresa_razonsocial', 'like', '%'.$this->search.'%')
                         ->orwhere('empresa_representante', 'like', '%'.$this->search.'%')
                         ->orderBy($this->sort, $this->direction)
-                        ->paginate(8);
+                        ->paginate(5);
 
         return view('livewire.admin.almacen.admin-empresas', compact('empresas'));
     }

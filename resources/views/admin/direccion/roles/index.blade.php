@@ -1,33 +1,33 @@
 @extends('adminlte::page')
 
-@section('title', 'ZnDm')
+@section('title', 'Roles')
 
 @section('content_header')
-    <h1>Lista de roles</h1>
+<div class="d-flex">
+    <h1 class="mr-auto">Lista de roles</h1>
+    <a href="{{route('admin.direccion.roles.create')}}" class="btn btn-info">CREAR ROL</a>
+</div>
 @stop
 
 @section('content')
     @if (session('info'))
-        <div class="alert alert-primary" role="alert">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
             <strong>Éxito!</strong> {{session('info')}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
-
     @endif
     
 
     <div class="card">
-
-        <div class="card-header">
-            <a href="" class="btn btn-success">Crear Rol</a>
-        </div>
-
         <div class="card-body">
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th colspan="2"></th>
+                        <th>Id</th>
+                        <th>Nombre</th>
+                        <th colspan="2" class="text-center">Acciones</th>
                     </tr>
                 </thead>
 
@@ -39,14 +39,14 @@
                             <td>{{$role->name}}</td>
 
                             <td width="10px">
-                                <a class="btn btn-secondary" href="">Editar</a>
+                                <a class="btn btn-success btn-sm" href="{{route('admin.direccion.roles.edit',$role)}}"><i class="fas fa-edit"></i></a>
                             </td>
 
                             <td width="10px">
-                                <form action="" method="post">
+                                <form action="{{route('admin.direccion.roles.destroy',$role)}}" method="post">
                                 @method('delete')
                                 @csrf
-                                <button type="submit" class="btn btn-danger">Eliminar</button>
+                                <button type="submit" class="btn btn-danger btn-sm"><i class="far fa-trash-alt"></i></button>
 
                                 </form>
                             </td>
@@ -58,12 +58,4 @@
             </table>
         </div>
     </div>
-@stop
-
-@section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
-@stop
-
-@section('js')
-    <script> console.log('Hi!'); </script>
 @stop

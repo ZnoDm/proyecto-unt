@@ -18,7 +18,7 @@ class AdminAlumno extends Component
     {
         $alumnos = Alumno::where('alumno_nombre', 'LIKE', '%' . $this->search . '%')->orWhere('alumno_email', 'LIKE', '%' . $this->search . '%')
             ->orWhere('alumno_apellido', 'LIKE', '%' . $this->search . '%')->orderBy($this->sort, $this->direction)
-            ->paginate(8);
+            ->paginate(5);
         return view('livewire.admin.almacen.admin-alumno', compact('alumnos'));
     }
     

@@ -15,7 +15,7 @@
                     <tr>
                         <th scope="col"
                             role="button" wire:click="order('voucher_nro')">
-                            NRO VOUCHER
+                            Nro Operacion
                             @if ($sort == 'voucher_nro')
                                 @if ($direction == 'asc')
                                     <i class="fas fa-sort-numeric-up-alt float-right mt-1"></i>
@@ -28,7 +28,7 @@
                         </th>
                         <th scope="col"
                             role="button" wire:click="order('voucher_url')">
-                            VOUCHER URL
+                            Voucher Url
                             @if ($sort == 'voucher_url')
                                 @if ($direction == 'asc')
                                     <i class="fas fa-sort-alpha-up-alt float-right mt-1"></i>
@@ -39,7 +39,7 @@
                                 <i class="fas fa-sort float-right mt-1"></i>
                             @endif
                         </th>
-                        <th>ACCIÓN</th>
+                        <th class="text-center">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -47,8 +47,8 @@
                     <tr>
                         <td>{{$voucher->voucher_nro}}</td>
                         <td>{{$voucher->voucher_url}}</td>
-                        <td width="50px">
-                            <a href="{{-- {{route('admin.docente.show',$docente)}} --}}" class="btn btn-success">Preview</a>
+                        <td width="10px" class="text-center">
+                            <a href="{{-- {{route('admin.docente.show',$docente)}} --}}" class="btn btn-success btn-sm"><i class="fas fa-eye"></i></a>
                         </td>
                     </tr>
                     @endforeach

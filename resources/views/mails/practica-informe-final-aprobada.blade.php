@@ -1,12 +1,16 @@
 @component('mail::message')
-# Introduction
+**Estimado, {{$alumno->alumno_apellido.' '.$alumno->alumno_nombre}}**  
 
-The body of your message.
+{{$mensaje}}
+  
 
-@component('mail::button', ['url' => ''])
-Button Text
+> Recomendaciones:  
+> Esta apto para realizar su tramite de tesis.    
+
+@component('mail::button', ['url' => 'http://proyecto-si.test:8080/'])
+IR AL SISTEMA
 @endcomponent
 
-Thanks,<br>
+Gracias,<br>
 {{ config('app.name') }}
 @endcomponent

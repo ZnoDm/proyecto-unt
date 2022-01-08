@@ -2,8 +2,11 @@
 
 namespace App\Http\Livewire\Admin\Secretaria;
 
+use App\Mail\TesisSecretariaDeniega;
+use App\Models\Alumno;
 use App\Models\Tesis;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 
 class TesisSolicitud extends Component
@@ -26,6 +29,12 @@ class TesisSolicitud extends Component
             'tesis_id'=>$tesis->id,
             'administrativo_id'=>1,
         ]);
+
+        $tipo="Tesis ha sido denegada por inconsistencia en los datos brindatos. ";
+        $alumno = Alumno::firstWhere('id',$tesis->alumno_id);
+        $mail = new TesisSecretariaDeniega($alumno,$tesis,$mensaje,$tipo);
+        Mail::to($alumno->alumno_email)->queue($mail);
+
         session()->flash('info','Se ha denegado Correctamente, se mandaron las observaciones al alumno');
         return redirect()->route('admin.secretaria.tesis');
     }

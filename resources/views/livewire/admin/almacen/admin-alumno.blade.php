@@ -11,7 +11,7 @@
                     <tr>
                         <th scope="col"
                             role="button" wire:click="order('id')">
-                            ID
+                            Id
                             @if ($sort == 'id')
                                 @if ($direction == 'asc')
                                     <i class="fas fa-sort-numeric-up-alt float-right mt-1"></i>
