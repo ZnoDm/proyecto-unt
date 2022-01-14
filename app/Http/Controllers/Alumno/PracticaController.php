@@ -53,12 +53,7 @@ class PracticaController extends Controller
             
             'file_practica' => 'required',
 
-            'docente_id'=>[
-                function ($attribute, $value, $fail) use ($request) {
-                if ($value == -1) {
-                    $fail('Seleccione un docente.');
-                }
-            }],
+            'docente_id'=>'required',
             'ruc' => 'required',
             'nombre' => 'required',
             'representante' => 'required',

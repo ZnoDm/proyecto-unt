@@ -5,7 +5,7 @@ use App\Http\Controllers\Admin\AlmacenController;
 use App\Http\Controllers\Admin\Direccion\RolController;
 use App\Http\Controllers\Admin\Direccion\Solicitud as DireccionSolicitud;
 use App\Http\Controllers\Admin\Docente\DocenteController as DocenteJurado;
-
+use App\Http\Controllers\Admin\EstadisticaController;
 use App\Http\Controllers\Admin\Secretaria\PracticaController;
 use App\Http\Controllers\Admin\Secretaria\TesisController;
 use App\Models\Docente;
@@ -22,8 +22,7 @@ Route::get('/secretaria/tesis/{id}/review', [TesisController::class,'revision'])
 
 /* Direccion */
 Route::get('/direccion', [DireccionSolicitud::class,'index'])->middleware('can:Ver Director Solicitudes')->name('admin.direccion.index');
-
-Route::resource('roles', RolController::class)->names('admin.direccion.roles');
+Route::resource('roles', RolController::class)->middleware('can:Ver Director Solicitudes')->names('admin.direccion.roles');
 
 /* Docente Jurado */
 Route::get('/docente', [DocenteJurado::class,'index'])->middleware('can:Ver Docente Solicitudes')->name('admin.docente.index');
@@ -34,6 +33,9 @@ Route::get('/docentes', [AlmacenController::class, 'docentes'])->middleware('can
 Route::get('/jurados', [AlmacenController::class, 'jurados'])->middleware('can:Ver Administrador Dashboard')->name('admin.jurados'); //Jurados
 Route::get('/empresas', [AlmacenController::class, 'empresas'])->middleware('can:Ver Administrador Dashboard')->name('admin.empresas'); //Empresas
 Route::get('/vouchers', [AlmacenController::class, 'vouchers'])->middleware('can:Ver Administrador Dashboard')->name('admin.vouchers'); //Vouchers
+
+/* Estadistica */
+Route::get('/estadistica/docente-asesor', [EstadisticaController::class, 'docenteAsesor'])->middleware('can:Ver Administrador Dashboard')->name('admin.estadistica.docenteAsesor');
 
 Route::get('/prueba', function () {
      return view('pruebas');

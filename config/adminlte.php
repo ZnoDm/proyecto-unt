@@ -286,8 +286,9 @@ return [
         ],
         ['header' => 'ESTADISTICAS'],
         [
-            'text' => 'Docente/Asesor',
-            'route' => 'admin.prueba',
+            'text' => 'Cuadros Estadisticos',
+            'active'      => ['admin/estadistica/docente*'],
+            'route' => 'admin.estadistica.docenteAsesor',
             'icon' => 'fas fa-chart-bar',
             'can' => 'Ver Administrador Dashboard'
         ],

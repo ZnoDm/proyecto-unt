@@ -1,6 +1,11 @@
 <div>
     @if (session('info'))
-    <div class="alert alert-success">{{session('info')}}</div>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Éxito!</strong> {{session('info')}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
     @endif
 
     <div class="card">
@@ -41,7 +46,7 @@
                         </th>
                         <th scope="col"
                             role="button" wire:click="order('docente_status')" class="text-center">
-                            Asignado
+                            Asignado Asesor
                             @if ($sort == 'docente_status')
                                 @if ($direction == 'asc')
                                     <i class="fas fa-sort-alpha-up-alt float-right mt-1"></i>
@@ -52,7 +57,6 @@
                                 <i class="fas fa-sort float-right mt-1"></i>
                             @endif
                         </th>
-                        <th class="text-center">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -61,22 +65,14 @@
                         <td>{{$docente->id}}</td>
                         <td>{{$docente->docente_nombre}}</td>
                         <td class="text-center">
-                            @switch($docente->docente_status)
-                                @case(1)
-                                    PRACTICAS
-                                    @break
-                                @case(2)
-                                    TESIS
-                                    @break
-                                @case(3)
-                                    PRACTICAS Y TESIS
-                                    @break
-                                @default
-                                    NO ASIGNADO
-                            @endswitch
-                        </td>
-                        <td width="10px" class="text-center">
-                            <a href="" class="btn btn-secondary btn-sm"><i class="fas fa-cog"></i></a>
+                            <label >
+                                <input {{($docente->docente_status==1 or $docente->docente_status==3)?'checked':''}} type="checkbox" value="1" wire:change="assignAsesor({{$docente->id}},$event.target.value)">
+                                PRACTICAS
+                            </label>
+                            <label >
+                                <input {{($docente->docente_status==2 or $docente->docente_status==3)?'checked':''}} type="checkbox" value="2" wire:change="assignAsesor({{$docente->id}},$event.target.value)">
+                                TESIS
+                            </label>
                         </td>
                     </tr>
                     @endforeach

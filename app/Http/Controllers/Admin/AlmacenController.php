@@ -43,17 +43,4 @@ class AlmacenController extends Controller
         return view('admin.almacen.vouchers');
     }
 
-    
-    public function grafico1(){
-        $consulta=DB::table('alumno_practica')
-        ->join('docentes', 'alumno_practica.docente_id', '=', 'docentes.id')
-        ->select(DB::raw('count(*) as cantidad, docentes.nombre'))
-        ->groupBy('docentes.nombre')
-        ->get();
-        $puntos = [];
-        foreach ($consulta as $c) {
-            $puntos[] = ['name' => $c->nombre, 'y' => floatval($c->cantidad)];
-        }
-        return view('admin.estadistica.docenteasesor', ["date" => json_encode($puntos)]);
-    }
 }

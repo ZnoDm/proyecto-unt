@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Admin\Almacen;
 
 use App\Models\Docente;
+use App\Models\User;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -13,6 +14,38 @@ class AdminDocente extends Component
     public $search;
     public $sort = 'id';
     public $direction = 'asc';
+
+    public function assignAsesor($id,$value){
+        $docente =Docente::find($id);
+        if($value == '1'){
+            if($docente->docente_status==1 or $docente->docente_status==3){                
+                $docente->update(['docente_status'=>2]);
+                session()->flash('info','Se ha removido como asesor de PRACTICAS');
+            }else{
+                if($docente->docente_status==2){
+                    $docente->update(['docente_status'=>3]);
+                    session()->flash('info','Se asignado como asesor TESIS Y PRACTICAS');
+                }else{
+                    $docente->update(['docente_status'=>1]);
+                    session()->flash('info','Se asignado como asesor PRACTICAS');
+                }
+            }
+            
+        }else{
+            if($docente->docente_status==2 or $docente->docente_status==3){                
+                $docente->update(['docente_status'=>1]);
+                session()->flash('info','Se ha removido como asesor de TESIS');
+            }else{
+                if($docente->docente_status==1){
+                    $docente->update(['docente_status'=>3]);
+                    session()->flash('info','Se asignado como asesor TESIS Y PRACTICAS');
+                }else{
+                    $docente->update(['docente_status'=>2]);
+                    session()->flash('info','Se asignado como asesor TESIS');
+                }
+            }
+        }
+    }
 
     public function render()
     {

@@ -43,12 +43,7 @@ class TesisController extends Controller
             'file_fut' => 'required',
 
             'titulo' => 'required',
-            'docente_id'=>[
-                function ($attribute, $value, $fail) use ($request) {
-                if ($value == -1) {
-                    $fail('Seleccione un docente.');
-                }
-            }],           
+            'docente_id'=>'required',           
             'file_tesis' => 'required',
             'fecha_inicio' => 'required',
             'fecha_fin' =>[
