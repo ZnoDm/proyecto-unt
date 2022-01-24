@@ -264,6 +264,24 @@ return [
             'icon' => 'fas fa-envelope',
             'can' => 'Ver Secretaria Tesis',
         ],
+        [
+            'header' => 'CRONOGRAMAS',
+            'can' => 'Ver Secretaria Practicas'
+        ],
+        [
+            'text' => 'Cronograma Practicas',
+            'active'      => ['admin/secretaria/cronograma-practicas*'],
+            'route' => 'admin.secretaria.cronoPracticas.index',
+            'icon' => 'fas fa-envelope',
+            'can' => 'Ver Secretaria Practicas',
+        ],
+        [
+            'text' => 'Cronograma Tesis',
+            'active'      => ['admin/secretaria/cronograma-tesis*'],
+            'route' => 'admin.secretaria.cronoTesis.index',
+            'icon' => 'fas fa-envelope',
+            'can' => 'Ver Secretaria Practicas',
+        ],
         ['header' => 'MANTENEDOR DE DIRECCION',
             'can' => 'Ver Director Solicitudes'
         ],

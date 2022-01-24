@@ -8,6 +8,9 @@ use App\Http\Controllers\Admin\Docente\DocenteController as DocenteJurado;
 use App\Http\Controllers\Admin\EstadisticaController;
 use App\Http\Controllers\Admin\Secretaria\PracticaController;
 use App\Http\Controllers\Admin\Secretaria\TesisController;
+use App\Http\Controllers\CronogramaPracticasController;
+use App\Http\Controllers\CronogramaTesisController;
+use App\Models\CronogramaPracticas;
 use App\Models\Docente;
 
 Route::get('/', function () {
@@ -19,6 +22,8 @@ Route::get('/secretaria/practicas', [PracticaController::class,'index'])->middle
 Route::get('/secretaria/practica/{id}/review', [PracticaController::class,'revision'])->middleware('can:Ver Secretaria Practicas')->name('admin.secretaria.practica.revision');
 Route::get('/secretaria/tesis', [TesisController::class,'index'])->middleware('can:Ver Secretaria Tesis')->name('admin.secretaria.tesis');
 Route::get('/secretaria/tesis/{id}/review', [TesisController::class,'revision'])->middleware('can:Ver Secretaria Tesis')->name('admin.secretaria.tesis.revision');
+Route::resource('/secretaria/cronograma-tesis', CronogramaTesisController::class)->middleware('can:Ver Secretaria Tesis')->names('admin.secretaria.cronoTesis');
+Route::resource('/secretaria/cronograma-practicas', CronogramaPracticasController::class)->middleware('can:Ver Secretaria Tesis')->names('admin.secretaria.cronoPracticas');
 
 /* Direccion */
 Route::get('/direccion', [DireccionSolicitud::class,'index'])->middleware('can:Ver Director Solicitudes')->name('admin.direccion.index');
